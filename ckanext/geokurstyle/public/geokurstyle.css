@@ -9411,8 +9411,8 @@ h4 small {
 .wrapper {
   border: 1px solid #ccc;
   border-radius: 4px;
-  -webkit-box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+  /* -webkit-box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05); */
   position: relative;
   min-height: 300px;
   background-color: #fff;
