@@ -9914,7 +9914,7 @@ h4 small {
   margin-bottom: initial;
   padding: 10px 0;
   color: #fff;
-  background: #9c9c9c;
+  background: #424242;
   /* background: #9c9c9c url("../../../base/images/bg.png"); */
 }
 .masthead:before,
@@ -10802,9 +10802,10 @@ br.line-height2 {
 .input-group-btn:last-child > .btn {
   z-index: 0;
 }
-/* body {
-  background: #00c46c url("../../../base/images/bg.png");
-} */
+body {
+    background: #424242;
+  /* background: #00c46c url("../../../base/images/bg.png"); */
+}
 [hidden] {
   display: none;
 }
