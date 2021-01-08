@@ -9815,7 +9815,8 @@ h4 small {
 .account-masthead {
   min-height: 30px;
   color: #fff;
-  background: #00c46c;
+  /* background: #00c46c; */
+  background: #424242;
   /* background: #237434 url("../../../base/images/bg.png"); */
 }
 .account-masthead:before,
@@ -9914,7 +9915,8 @@ h4 small {
   margin-bottom: initial;
   padding: 10px 0;
   color: #fff;
-  background: #424242;
+  background: #00c46c;
+  /* background: #424242; */
   /* background: #9c9c9c url("../../../base/images/bg.png"); */
 }
 .masthead:before,
@@ -10803,7 +10805,7 @@ br.line-height2 {
   z-index: 0;
 }
 body {
-    background: #424242;
+    /* background: #424242; */
   /* background: #00c46c url("../../../base/images/bg.png"); */
 }
 [hidden] {
