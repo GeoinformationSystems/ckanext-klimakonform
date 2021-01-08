@@ -10382,8 +10382,8 @@ h4 small {
   border: 1px solid #FFF;
   text-indent: -1000px;
   border-radius: 100px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  /* -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); */
 }
 .activity .item.no-avatar p {
   margin-left: 40px;
