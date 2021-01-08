@@ -9707,7 +9707,7 @@ h4 small {
 }
 .homepage .module-search .module-content {
   border-radius: 3px 3px 0 0;
-  background-color: #2F9B45;
+  background-color: #00c46c;
   border-bottom: none;
 }
 .homepage .module-search .module-content .heading {
@@ -9718,7 +9718,7 @@ h4 small {
 }
 .homepage .module-search .tags {
   padding: 5px 10px 10px 10px;
-  background-color: #237434;
+  background-color: #006839;
   border-radius: 0 0 3px 3px;
 }
 .homepage .module-search .tags:before,
