@@ -10172,7 +10172,7 @@ h4 small {
 .site-footer .btn-navbar-btn.active,
 .site-footer .btn-navbar-btn.disabled,
 .site-footer .btn-navbar-btn[disabled] {
-  background-color: #237434;
+  background-color: #00c46c;
   background-image: none;
   border: none;
   -webkit-box-shadow: none;
