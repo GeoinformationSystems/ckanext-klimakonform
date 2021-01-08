@@ -10802,9 +10802,9 @@ br.line-height2 {
 .input-group-btn:last-child > .btn {
   z-index: 0;
 }
-body {
+/* body {
   background: #00c46c url("../../../base/images/bg.png");
-}
+} */
 [hidden] {
   display: none;
 }
