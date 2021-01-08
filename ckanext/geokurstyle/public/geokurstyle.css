@@ -9815,7 +9815,7 @@ h4 small {
 .account-masthead {
   min-height: 30px;
   color: #fff;
-  background: #42ec42;
+  background: #00c46c;
   /* background: #237434 url("../../../base/images/bg.png"); */
 }
 .account-masthead:before,
@@ -10070,7 +10070,7 @@ h4 small {
   margin-bottom: initial;
   padding: 10px 0;
   color: #fff;
-  background: #49db66;
+  background: #00c46c;
   /* background: #2F9B45 url("../../../base/images/bg.png"); */
   padding: 20px 0;
 }
@@ -10213,7 +10213,7 @@ h4 small {
   width: 68px;
   height: 21px;
   margin-top: 2px;
-  background: url("./geokur_light_small.png") no-repeat top left;
+  background: url("../../../base/images/ckan-logo-footer.png") no-repeat top left;
   text-indent: -900em;
 }
 .lang-select:before,
@@ -10802,9 +10802,9 @@ br.line-height2 {
 .input-group-btn:last-child > .btn {
   z-index: 0;
 }
-/* body {
-  background: #2F9B45 url("../../../base/images/bg.png");
-} */
+body {
+  background: #00c46c url("../../../base/images/bg.png");
+}
 [hidden] {
   display: none;
 }
