@@ -7000,7 +7000,8 @@ a.tag:hover {
   list-style: none;
   min-height: 205px;
   padding-top: 15px;
-  background: #fbfbfb url("../../../base/images/bg.png");
+  background: #fbfbfb; 
+  /* background: #fbfbfb url("../../../base/images/bg.png"); */
   border: 1px solid #ddd;
   border-width: 1px 0;
 }
@@ -7156,7 +7157,8 @@ a.tag:hover {
   list-style: none;
   min-height: 205px;
   padding-top: 15px;
-  background: #fbfbfb url("../../../base/images/bg.png");
+  background: #fbfbfb;
+  /* background: #fbfbfb url("../../../base/images/bg.png"); */
   border: 1px solid #ddd;
   border-width: 1px 0;
 }
@@ -9458,7 +9460,8 @@ h4 small {
 @media (min-width: 768px) {
   .main {
     padding-top: 10px;
-    background: #eee url("../../../base/images/bg.png");
+    background: #eee;
+    /* background: #eee url("../../../base/images/bg.png"); */
   }
 }
 [role=main],
@@ -9553,9 +9556,9 @@ h4 small {
   margin-bottom: 20px;
 }
 @media (min-width: 768px) {
-  .hero {
+  /* .hero {
     background: url("../../../base/images/background-tile.png");
-  }
+  } */
 }
 .hero:after {
   background-color: rgba(0, 0, 0, 0.09);
@@ -9812,7 +9815,8 @@ h4 small {
 .account-masthead {
   min-height: 30px;
   color: #fff;
-  background: #237434 url("../../../base/images/bg.png");
+  background: #42ec42;
+  /* background: #237434 url("../../../base/images/bg.png"); */
 }
 .account-masthead:before,
 .account-masthead:after {
@@ -9910,7 +9914,8 @@ h4 small {
   margin-bottom: initial;
   padding: 10px 0;
   color: #fff;
-  background: #9c9c9c url("../../../base/images/bg.png");
+  background: #9c9c9c;
+  /* background: #9c9c9c url("../../../base/images/bg.png"); */
 }
 .masthead:before,
 .masthead:after {
@@ -10065,7 +10070,8 @@ h4 small {
   margin-bottom: initial;
   padding: 10px 0;
   color: #fff;
-  background: #2F9B45 url("../../../base/images/bg.png");
+  background: #49db66;
+  /* background: #2F9B45 url("../../../base/images/bg.png"); */
   padding: 20px 0;
 }
 .site-footer:before,
@@ -10207,7 +10213,7 @@ h4 small {
   width: 68px;
   height: 21px;
   margin-top: 2px;
-  background: url("../../../base/images/ckan-logo-footer.png") no-repeat top left;
+  background: url("./geokur_light_small.png") no-repeat top left;
   text-indent: -900em;
 }
 .lang-select:before,
@@ -10796,9 +10802,9 @@ br.line-height2 {
 .input-group-btn:last-child > .btn {
   z-index: 0;
 }
-body {
+/* body {
   background: #2F9B45 url("../../../base/images/bg.png");
-}
+} */
 [hidden] {
   display: none;
 }
