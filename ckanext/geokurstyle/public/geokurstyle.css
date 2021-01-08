@@ -10805,7 +10805,7 @@ br.line-height2 {
   z-index: 0;
 }
 body {
-    /* background: #424242; */
+    background: #eee;
   /* background: #00c46c url("../../../base/images/bg.png"); */
 }
 [hidden] {
