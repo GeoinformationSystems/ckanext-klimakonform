@@ -2,7 +2,7 @@
 
 {% block header_logo %}
 <!-- {{ super() }} -->
-<a href="http://172.26.62.253/"><img src="/geokur_light.png" /></a>
+<a href="{{ h.url_for('home.index') }}"><img src="/geokur_light.png" /></a>
 {% endblock %}
 
 {% block header_account_logged %} {% if c.userobj.sysadmin %}
