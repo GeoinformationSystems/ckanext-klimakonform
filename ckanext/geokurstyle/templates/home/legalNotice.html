@@ -1,0 +1,24 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Legal Notice') }}{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="active">{% link_for _('Legal Notice'), 'home.legalNotice' %}</li>
+{% endblock %}
+
+{% block primary %}
+<article class="module" role="main">
+    <div class="module-content">
+        {% block legalNotice %}
+        {% if g.site_legalNotice %}
+        {{ h.render_markdown(g.site_legalNotice) }}
+        {% else %}
+        <h1 class="page-heading">{{ _('Legal Notice') }}</h1>
+        {% snippet 'home/snippets/legalNotice_text.html' %}
+        {% endif %}
+        {% endblock %}
+    </div>
+</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}
