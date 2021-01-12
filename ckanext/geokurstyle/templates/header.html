@@ -19,14 +19,20 @@
     </a>
 </li>
 <li>
-    <a href="{{ h.url_for_static('harvest')}}" title="{{ _('Harvest') }}">
-        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+    <a href="{{ h.url_for_static('reports')}}" title="{{ _('Reports') }}">
+        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
         <span class="text">{{ _('Admin') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ h.url_for_static('harvest')}}" title="{{ _('Harvest') }}">
-        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+    <a href="{{ h.url_for_static('user')}}" title="{{ _('List Users') }}">
+        <i class="fa fa-adress-book-o" aria-hidden="true"></i>
+        <span class="text">{{ _('Admin') }}</span>
+    </a>
+</li>
+<li>
+    <a href="{{ h.url_for_static('user/register')}}" title="{{ _('Create New User') }}">
+        <i class="fa fa-cloud-user-plus" aria-hidden="true"></i>
         <span class="text">{{ _('Admin') }}</span>
     </a>
 </li>
