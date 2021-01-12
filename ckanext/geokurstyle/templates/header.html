@@ -4,3 +4,12 @@
 <!-- {{ super() }} -->
 <a href="http://172.26.62.253/"><img src="/geokur_light.png" /></a>
 {% endblock %}
+
+{% block header_account_logged %} {% if c.userobj.sysadmin %}
+<li>
+    <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings2') }}">
+        <i class="fa fa-gavel" aria-hidden="true"></i>
+        <span class="text">{{ _('Admin') }}</span>
+    </a>
+</li>
+{% endif %}
