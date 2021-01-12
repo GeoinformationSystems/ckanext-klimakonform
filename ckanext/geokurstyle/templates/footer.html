@@ -11,7 +11,6 @@
     {% block footer_links_ckan %}
     {% set api_url = 'http://docs.ckan.org/en/{0}/api/'.format(g.ckan_doc_version) %}
     <li><a href="{{ api_url }}">{{ _('CKAN API') }}</a></li>
-    <li><a href="http://www.ckan.org/">{{ _('CKAN Association') }}</a></li>
     <li><a href="http://www.opendefinition.org/okd/"><img src="{{ h.url_for_static('/base/images/od_80x15_blue.png') }}"
                 alt="Open Data"></a></li>
     {% endblock %}
@@ -24,5 +23,4 @@
     endtrans %}</p>
 {% endblock %}
 {% block footer_lang %}
-{% snippet "snippets/language_selector.html" %}
 {% endblock %}
