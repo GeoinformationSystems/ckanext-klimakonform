@@ -1,0 +1,7 @@
+geokurstyle_css:
+  output: ckanext-geokurstyle/%(version)s_geokurstyle.css
+  extra:
+    preload:
+      - base/main
+  contents:
+    - geokurstyle.css
