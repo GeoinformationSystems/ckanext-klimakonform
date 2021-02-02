@@ -1,0 +1,65 @@
+{% set tags = h.get_facet_items_dict('tags', c.search_facets, limit=3) %}
+{% set placeholder = _('E.g. environment') %}
+
+<div class="module module-search module-narrow module-shallow box">
+    <form class="module-content search-form" method="get" action="{% url_for 'dataset.search' %}">
+        <h3 class="heading">{{ _("Search data") }}</h3>
+        <div class="search-input form-group search-giant">
+            <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
+                id="field-main-search" type="text" class="form-control" name="q" value="" autocomplete="off"
+                placeholder="{% block search_placeholder %}{{ placeholder }}{% endblock %}" />
+            <button type="submit" aria-labelledby="search-label">
+                <i class="fa fa-search"></i>
+                <span class="sr-only" id="search-label">{{ _('Search') }}</span>
+            </button>
+        </div>
+    </form>
+    <div class="tags">
+        <h3>{{ _('Popular tags') }}</h3>
+        {% for tag in tags %}
+        <a class="tag" href="{% url_for 'dataset.search', tags=tag.name %}">{{ h.truncate(tag.display_name, 22) }}</a>
+        {% endfor %}
+    </div>
+    {% set map_config = h.get_common_map_config() %}
+    <div class="dataset-map" data-module="spatial-query" data-default_extent="{{ default_extent }}"
+        data-module-map_config="{{ h.dump_json(map_config) }}">
+        <div id="dataset-map-container"></div>
+    </div>
+    <div id="dataset-map-attribution">
+        {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
+    </div>
+</div>
+
+
+{#
+Displays a map widget to define a spatial filter on the dataset search page sidebar
+
+default_extent
+Initial map extent (Optional, defaults to the whole world). It can be defined
+either as a pair of coordinates or as a GeoJSON bounding box.
+
+e.g.
+{% snippet "spatial/snippets/spatial_query.html", default_extent=[[15.62, -139.21], [64.92, -61.87]] %}
+
+{% snippet "spatial/snippets/spatial_query.html", default_extent="{ \"type\": \"Polygon\", \"coordinates\": [[[74.89,
+29.39],[74.89, 38.45], [60.50, 38.45], [60.50, 29.39], [74.89, 29.39]]]}" %}
+
+}
+<section id="dataset-map" class="module module-narrow module-shallow">
+    <h2 class="module-heading">
+        <i class="icon-medium icon-globe"></i>
+        {{ _('Filter by location') }}
+        <a href="{{ h.remove_url_param(['ext_bbox','ext_prev_extent', 'ext_location']) }}" class="action">{{ _('Clear')
+            }}</a>
+    </h2>
+    {% set map_config = h.get_common_map_config() %}
+    <div class="dataset-map" data-module="spatial-query" data-default_extent="{{ default_extent }}"
+        data-module-map_config="{{ h.dump_json(map_config) }}">
+        <div id="dataset-map-container"></div>
+    </div>
+    <div id="dataset-map-attribution">
+        {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
+    </div>
+</section>
+
+{% resource 'ckanext-spatial/spatial_query' %}#
