@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+<div role="main" class="hero">
+    <div class="container">
+        {% block search %}
+        {% snippet 'home/snippets/search.html' %}
+        {% endblock %}
+        {% block stats %}
+        {% snippet 'home/snippets/stats.html' %}
+        {% endblock %}
+    </div>
+</div>
