@@ -21,7 +21,7 @@
         {% endfor %}
     </div>
 
-    <section id="dataset-map" class="module">
+    <div id="dataset-map" class="module">
 
         <h2 class="module-heading">
             <i class="icon-medium icon-globe"></i>
@@ -37,7 +37,7 @@
         <div id="dataset-map-attribution">
             {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
         </div>
-    </section>
+    </div>
 
     {% resource 'ckanext-spatial/spatial_query' %}
 
