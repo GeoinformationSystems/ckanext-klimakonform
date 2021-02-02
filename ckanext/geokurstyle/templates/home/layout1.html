@@ -1,5 +1,3 @@
-{% ckan_extends %}
-
 <div role="main" class="hero">
     <div class="container">
         {% block search %}
@@ -9,6 +7,11 @@
     <div class="container">
         {% block stats %}
         {% snippet 'home/snippets/stats.html' %}
+        {% endblock %}
+    </div>
+    <div class="container">
+        {% block featured_group %}
+        {{ h.recently_changed_packages_activity_stream(limit=4) }}
         {% endblock %}
     </div>
 </div>
