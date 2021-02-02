@@ -1,7 +1,7 @@
 <div role="main" class="hero">
     <div class="container">
         {% block search %}
-        {% snippet 'snippets/searchSpatial.html' %}
+        {% snippet 'snippets/searchSpatial.html', groups=h.searchSpatial() %}
         {% endblock %}
     </div>
     <div class="container">
