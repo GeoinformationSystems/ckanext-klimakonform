@@ -6916,10 +6916,8 @@ a.tag:hover {
 }
 .box {
   background-color: #fff;
-  /* border: 1px solid #ccc; */
-  /* border-radius: 4px; */
-  /* -webkit-box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05); */
-  /* box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05); */
+  box-shadow: none;
+  border: none;
 }
 .module > .page-header {
   margin-top: 15px;
@@ -9562,9 +9560,12 @@ h4 small {
   margin-bottom: 20px;
 }
 @media (min-width: 768px) {
-  /* .hero {
-    background: url("../../../base/images/background-tile.png");
-  } */
+  .hero {
+    background: none;
+  }
+}
+.hero {
+  border: none;
 }
 .hero:after {
   background-color: rgba(0, 0, 0, 0.09);
