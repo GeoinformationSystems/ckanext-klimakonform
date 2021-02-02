@@ -22,6 +22,7 @@
     </div>
     <h2 class="module-heading">
         <i class="icon-medium icon-globe"></i>
+        {{ _('Filter by location') }}
         <a href="{{ h.remove_url_param(['ext_bbox','ext_prev_extent', 'ext_location']) }}" class="action">{{
             _('Clear') }}</a>
     </h2>
@@ -34,7 +35,7 @@
         {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
     </div>
 
-    {% asset 'ckanext-spatial/spatial_query' %}
+    {% resource 'ckanext-spatial/spatial_query' %}
 
 
 </div>
