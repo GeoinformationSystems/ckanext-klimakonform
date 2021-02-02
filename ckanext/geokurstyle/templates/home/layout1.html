@@ -1,5 +1,9 @@
 <div role="main" class="hero">
-
+    <div class="container">
+        {% block search %}
+        {% snippet 'home/snippets/search.html' %}
+        {% endblock %}
+    </div>
     <div class="container">
         {% block stats %}
         {% snippet 'home/snippets/stats.html' %}
