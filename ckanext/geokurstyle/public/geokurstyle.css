@@ -9701,60 +9701,18 @@ h4 small {
 .homepage .row {
   position: relative;
 }
-.homepage .module-search {
+.module-search{
   padding: 5px;
-  color: #fff;
+  color: rgb(122, 117, 117);
   background: #fff;
-}
-.homepage .module-search .search-giant {
-  margin-bottom: 10px;
-}
-.homepage .module-search .search-giant input {
   border-color: #003f52;
-}
-.homepage .module-search .module-content {
-  border-radius: 3px 3px 0 0;
+  border-radius: 0 0 0 0;
   background-color: #00c46c;
   border-bottom: none;
-}
-.homepage .module-search .module-content .heading {
-  margin-top: 0;
-  margin-bottom: 7px;
-  font-size: 24px;
-  line-height: 40px;
-}
-.homepage .module-search .tags {
   padding: 5px 10px 10px 10px;
   background-color: #006839;
-  border-radius: 0 0 3px 3px;
 }
-.homepage .module-search .tags:before,
-.homepage .module-search .tags:after {
-  display: table;
-  content: " ";
-}
-.homepage .module-search .tags:after {
-  clear: both;
-}
-.homepage .module-search .tags:before,
-.homepage .module-search .tags:after {
-  display: table;
-  content: " ";
-}
-.homepage .module-search .tags:after {
-  clear: both;
-}
-.homepage .module-search .tags h3,
-.homepage .module-search .tags .tag {
-  display: block;
-  float: left;
-  margin: 5px 10px 0 0;
-}
-.homepage .module-search .tags h3 {
-  font-size: 14px;
-  line-height: 1.42857143;
-  padding: 2px 8px;
-}
+
 .homepage .group-list {
   margin: 0;
 }
