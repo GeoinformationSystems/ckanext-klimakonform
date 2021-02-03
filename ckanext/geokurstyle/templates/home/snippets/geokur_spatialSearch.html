@@ -12,7 +12,7 @@ e.g.
 29.39],[74.89, 38.45], [60.50, 38.45], [60.50, 29.39], [74.89, 29.39]]]}" %}
 
 #}
-<section id="dataset-map" class="module module-shallow">
+<section id="geokur-map" class="module module-narrow module-shallow">
     <h2 class="module-heading">
         <i class="icon-medium icon-globe"></i>
         {{ _('Filter by location') }}
@@ -20,9 +20,9 @@ e.g.
             }}</a>
     </h2>
     {% set map_config = h.get_common_map_config() %}
-    <div class="dataset-map" data-module="spatial-query" data-default_extent="{{ default_extent }}"
+    <div class="geokur-map" data-module="spatial-query" data-default_extent="{{ default_extent }}"
         data-module-map_config="{{ h.dump_json(map_config) }}">
-        <div id="dataset-map-container"></div>
+        <div id="geokur-map-container"></div>
     </div>
     <div id="dataset-map-attribution">
         {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
