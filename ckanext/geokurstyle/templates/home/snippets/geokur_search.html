@@ -4,13 +4,15 @@
 <div class="box"></div>
 <form class="module-content search-form" method="get" action="{% url_for 'dataset.search' %}"></form>
 <div class="search-input">
-    <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
-        id="field-main-search" type="text" class="form-control" name="q" value="" autocomplete="off"
-        placeholder="{% block search_placeholder %}{{ placeholder }}{% endblock %}" />
-    <button type="submit" aria-labelledby="search-label">
-        <i class="fa fa-search"></i>
-        <span class="sr-only" id="search-label">{{ _('Search') }}</span>
-    </button>
+    <div class="search-input form-group search-giant">
+        <input aria-label="{% block header_site_search_label %}{{ _('Search datasets') }}{% endblock %}"
+            id="field-main-search" type="text" class="form-control" name="q" value="" autocomplete="off"
+            placeholder="{% block search_placeholder %}{{ placeholder }}{% endblock %}" />
+        <button type="submit" aria-labelledby="search-label">
+            <i class="fa fa-search"></i>
+            <span class="sr-only" id="search-label">{{ _('Search') }}</span>
+        </button>
+    </div>
 </div>
 </form>
 <div class="tags">
