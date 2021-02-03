@@ -70,10 +70,10 @@
 }
 @media {
     .main{
-        padding-top: 0;
       background: #fbfbfb;
     }
     .hero {
+        padding-top: 0;
       background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/07/palm_oil_plantations/19484718-1-eng-GB/Palm_oil_plantations_pillars.jpg");
     }
 }
