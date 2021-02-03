@@ -32,6 +32,7 @@
 .masthead .navigation .nav-pills li.active a {
   background-color:#005831;
   border-radius: 0 0 0 0;
+  margin-top: fill;
 }
 
 .space-top{
@@ -89,6 +90,7 @@ body {
 
 .collapse.navbar-collapse .section.navigation{
     font-size: large;
+    height: max-content;
 }
 
 #esa-attribution{
