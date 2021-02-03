@@ -13,6 +13,7 @@
 .search-form {
     border-bottom: none;
     max-width: 70%;
+    align-self: center;
   }
 .module-grid, .media-grid{
     background: #fbfbfb
