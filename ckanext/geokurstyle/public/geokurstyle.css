@@ -11,7 +11,8 @@
 }
 
 .search-form {
-    border-bottom: 1px dotted rgba(221, 221, 221, 0);
+    border-bottom: none;
+    max-width: 70%;
   }
 .module-grid, .media-grid{
     background: #fbfbfb
