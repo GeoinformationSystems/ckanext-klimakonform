@@ -1,11 +1,11 @@
 .btn {
     border-radius: 0 0 0 0;
-    border-width: 0;
 }
 .btn-primary {
     color: #fff;
     background-color: #00c46c;
-    border-color: #1b5a6e;
+    border-color: #1b5a6e;    
+    border-width: 0;
   }
   .btn-primary:focus,
   .btn-primary.focus {
