@@ -1,0 +1,18 @@
+.module-search{
+    padding: 5px;
+    color: rgb(122, 117, 117);
+    background: #fff;
+    border-color: #003f52;
+    border-radius: 0 0 0 0;
+    background-color: #00c46c;
+    border-bottom: none;
+    padding: 5px 10px 10px 10px;
+    background-color: #006839;
+  }
+
+  .box {
+    background-color: #fff;
+    box-shadow: none;
+    border: none;
+    border-radius: 0 0 0 0;
+  }
