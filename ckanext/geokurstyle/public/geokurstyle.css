@@ -38,6 +38,7 @@
 
   .masthead, .site-footer{
       background: #00c46c;
+      opacity: 20;
   }
 
   body {
