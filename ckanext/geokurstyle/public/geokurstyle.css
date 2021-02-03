@@ -20,6 +20,9 @@
     max-width: 70%;
     margin: auto;
     border-radius: 0 0 0 0;
+    border: #424242;
+    border-radius: none;
+    border-width: 2pt;
   }
 .module-grid, .media-grid{
     background: #fbfbfb
