@@ -1,45 +1,42 @@
+.homepage .module-search .module-content {
+  border-radius: 0 0 0 0;
+  background-color: #00c46c;
+}
+.homepage .module-search .tags {
+  background-color: #ffd311;
+  border-radius: 0 0 0 0;
+}
+.box, .wrapper{
+  background-color: #fbfbfb;
+  box-shadow: none;
+  border: none;
+  border-radius: 0 0 0 0;
+}
 
-  .homepage .module-search .module-content {
+.search-input{
+    opacity: 20;
     border-radius: 0 0 0 0;
-    background-color: #00c46c;
-  }
-
-  .homepage .module-search .tags {
-    background-color: #ffd311;
-    border-radius: 0 0 0 0;
-  }
-
-  .box, .wrapper{
-    background-color: #fbfbfb;
     box-shadow: none;
-    border: none;
-    border-radius: 0 0 0 0;
-  }
+}
 
-
-
-  .module-grid, .media-grid{
+.module-grid, .media-grid{
+    background: #fbfbfb
+}
+@media {
+    .main{
       background: #fbfbfb
-  }
-
-  @media {
-      .main{
-        background: #fbfbfb
-      }
-      .hero {
-        background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/07/palm_oil_plantations/19484718-1-eng-GB/Palm_oil_plantations_pillars.jpg");
-      }
-  }
-
-  .account-masthead{
-      background:#424242;
-      /* background: #237434 url("../../../base/images/bg.png"); */
-  }
-
-  .masthead, .site-footer{
-      background: #00c46c;
-  }
-
-  body {
-      background: #fbfbfb;
-  }
+    }
+    .hero {
+      background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/07/palm_oil_plantations/19484718-1-eng-GB/Palm_oil_plantations_pillars.jpg");
+    }
+}
+.account-masthead{
+    background:#424242;
+    /* background: #237434 url("../../../base/images/bg.png"); */
+}
+.masthead, .site-footer{
+    background: #00c46c;
+}
+body {
+    background: #fbfbfb;
+}
