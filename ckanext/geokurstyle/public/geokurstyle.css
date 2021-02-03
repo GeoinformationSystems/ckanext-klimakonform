@@ -82,6 +82,14 @@
 .masthead, .site-footer{
     background: #00c46c;
 }
+
 body {
     background: #fbfbfb;
+}
+
+#esa-attribution{
+    color: #ccc;
+    position:absolute;
+    bottom:0;
+    right:0;
 }
