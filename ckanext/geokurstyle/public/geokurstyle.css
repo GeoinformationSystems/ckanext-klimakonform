@@ -1,5 +1,6 @@
 .btn {
     border-radius: 0 0 0 0;
+    border-width: 0;
 }
 .btn-primary {
     color: #fff;
@@ -49,12 +50,10 @@
     max-width: 70%;
     margin: auto;
     border-radius: 0 0 0 0;
-    border: #424242;
-    border-width: 1pt;
   }
 
   .form-control {
-    border: 2px solid  #424242;
+    border: 1px solid  #424242;
     border-radius: 0 0 0 0;
     box-shadow: none;
   }
