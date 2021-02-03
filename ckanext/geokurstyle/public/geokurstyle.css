@@ -1,4 +1,6 @@
-
+* {
+    border-radius: 0 0 0 0;
+}
 
 .space-top{
     margin-top: 30pt;
@@ -11,11 +13,9 @@
   border-radius: 0 0 0 0;
 }
 
-* {
-    border-radius: 0 0 0 0;
-}
 
-.search-form {
+
+.space-top .search-form {
     border-bottom: none;
     max-width: 70%;
     margin: auto;
