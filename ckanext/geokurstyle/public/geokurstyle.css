@@ -1,14 +1,8 @@
 
-  .search-form {
-    padding: 5px;
-    color: rgb(122, 117, 117);
-    background: #fff;
-    border-color: #003f52;
+  .module-search {
+    background-color: #4cb3d3;
     border-radius: 0 0 0 0;
-    background-color: #00c46c;
-    border-bottom: none;
-    padding: 5px 10px 10px 10px;
-  } 
+  }
 
 
   .box {
