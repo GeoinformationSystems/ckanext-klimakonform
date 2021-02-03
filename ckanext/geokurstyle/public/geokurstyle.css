@@ -11,6 +11,10 @@
   border-radius: 0 0 0 0;
 }
 
+* {
+    border-radius: 0 0 0 0;
+}
+
 .search-form {
     border-bottom: none;
     max-width: 70%;
