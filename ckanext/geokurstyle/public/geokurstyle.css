@@ -93,6 +93,8 @@ body {
     bottom:0;
     right:0;
     font-size: xx-small;
+    text-align: right;
+    margin-right: 4pt;
 }
 
 #esa-attribution a{
