@@ -94,3 +94,7 @@ body {
     right:0;
     font-size: xx-small;
 }
+
+#esa-attribution a{
+    color: hotpink;
+}
