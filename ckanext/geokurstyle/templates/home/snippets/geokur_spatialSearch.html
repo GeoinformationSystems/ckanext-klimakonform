@@ -22,7 +22,7 @@ e.g.
     {% set map_config = h.get_common_map_config() %}
     <div class="geokur-map" data-module="spatial-query" data-default_extent="{{ default_extent }}"
         data-module-map_config="{{ h.dump_json(map_config) }}">
-        <div id="geokur-map-container"></div>
+        <div id="dataset-map-container"></div>
     </div>
     <div id="dataset-map-attribution">
         {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
