@@ -1,24 +1,2 @@
-/* Side bar */
-.module-narrow #geokur-map-container{
-    height: 200px;
-  }
-  
-  /* Primary content */
-  
-  .geokur-map-section-20x {
-    padding: 0 25px;
-    margin: 20px 0;
-  }
-  
-  .geokur-map #geokur-map-container{
-    height: 250px;
-  }
-  
-  #dataset-map-attribution{
-    font-size: xx-small;
-  }
-  
-  .module-narrow #dataset-map-attribution{
-    margin-left: 3px;
-  }
+
   
