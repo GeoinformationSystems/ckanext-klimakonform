@@ -87,6 +87,10 @@ body {
     background: #fbfbfb;
 }
 
+.collapse.navbar-collapse .section.navigation{
+    font-size: large;
+}
+
 #esa-attribution{
     color: #ccc;
     position:absolute;
