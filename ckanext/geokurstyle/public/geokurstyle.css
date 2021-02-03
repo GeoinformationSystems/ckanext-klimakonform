@@ -13,7 +13,11 @@
   border-radius: 0 0 0 0;
 }
 
-
+.homepage .module-search .module-content {
+    border-radius: none;
+    background-color: #007a10;
+    border-bottom: none;
+  }
 
 .space-top .search-form {
     border-bottom: none;
