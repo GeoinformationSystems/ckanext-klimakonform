@@ -3,6 +3,10 @@
   background-color: #00c46c;
 }
 
+.space-top{
+    margin-top: 20pt;
+}
+
 .box, .wrapper{
   background-color: #fbfbfb;
   box-shadow: none;
