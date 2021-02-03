@@ -9,12 +9,14 @@
     border-radius: 0 0 0 0;
   }
 
-  .box {
+  .box, .wrapper{
     background-color: #fbfbfb;
     box-shadow: none;
     border: none;
     border-radius: 0 0 0 0;
   }
+
+
 
   .module-grid, .media-grid{
       background: #fbfbfb
