@@ -2,10 +2,7 @@
   border-radius: 0 0 0 0;
   background-color: #00c46c;
 }
-.homepage .module-search .tags {
-  background-color: #ffd311;
-  border-radius: 0 0 0 0;
-}
+
 .box, .wrapper{
   background-color: #fbfbfb;
   box-shadow: none;
@@ -15,9 +12,10 @@
 
 .search-form{
     border-bottom: none;
+    border-radius: 0 0 0 0;
 }
 
-.search-input{
+.search-form .search-input{
     opacity: 20;
     border-radius: 0 0 0 0;
     box-shadow: none;
