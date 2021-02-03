@@ -18,7 +18,7 @@
 
   }
 
-.homepage .space-top .search-form {
+.space-top .search-form {
     border-bottom: none;
     max-width: 70%;
     margin: auto;
@@ -27,6 +27,20 @@
     border-radius: none;
     border-width: 2pt;
   }
+
+  .form-control {
+    border: 2px solid rgb(48, 47, 47);
+    border-radius: none;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: none;
+  }
+  .form-control:focus {
+    border-color: #75e966;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+
 .module-grid, .media-grid{
     background: #fbfbfb
 }
