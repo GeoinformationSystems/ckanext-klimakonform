@@ -15,12 +15,6 @@
     border-radius: 0 0 0 0;
 }
 
-.search-form .search-input{
-    opacity: 20;
-    border-radius: 0 0 0 0;
-    box-shadow: none;
-}
-
 .module-grid, .media-grid{
     background: #fbfbfb
 }
