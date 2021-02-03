@@ -1,35 +1,40 @@
-.homepage .module-search {
-    padding: 5px;
-    color: #fff;
-    background: #fff;
-  }
-  .homepage .module-search .search-giant {
-    margin-bottom: 10px;
-  }
-  .homepage .module-search .search-giant input {
-    border-color: #9c1a50;
-  }
+
   .homepage .module-search .module-content {
     border-radius: 0 0 0 0;
-    background-color: #187a00;
-    border-bottom: none;
+    background-color: #00c46c;
   }
-  .homepage .module-search .module-content .heading {
-    margin-top: 0;
-    margin-bottom: 7px;
-    font-size: 24px;
-    line-height: 40px;
-  }
+
   .homepage .module-search .tags {
-    padding: 5px 10px 10px 10px;
     background-color: #ffd311;
     border-radius: 0 0 0 0;
   }
 
-
   .box {
-    background-color: #fff;
+    background-color: #fbfbfb;
     box-shadow: none;
     border: none;
     border-radius: 0 0 0 0;
+  }
+
+  .module-grid, .media-grid{
+      background: #fbfbfb
+  }
+
+  @media {
+      .main{
+        background: #fbfbfb
+      }
+  }
+
+  .account-masthead{
+      background:#424242;
+      /* background: #237434 url("../../../base/images/bg.png"); */
+  }
+
+  .masthead, .site-footer{
+      background: #00c46c;
+  }
+
+  body {
+      background: #fbfbfb;
   }
