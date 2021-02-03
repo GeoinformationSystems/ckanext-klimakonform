@@ -52,8 +52,8 @@
     border-radius: 0 0 0 0;
   }
 
-  .form-control {
-    border: 1px solid  #424242;
+  .form-control {    
+    border: 1px solid #ccc;
     border-radius: 0 0 0 0;
     box-shadow: none;
   }
