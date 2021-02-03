@@ -24,6 +24,9 @@
       .main{
         background: #fbfbfb
       }
+      .hero {
+        background: url("/public/Palm_oil_plantations.jpg");
+      }
   }
 
   .account-masthead{
