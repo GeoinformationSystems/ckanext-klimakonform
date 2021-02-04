@@ -3,6 +3,7 @@
 }
 
 #btn-map-cancel::after{
+  color: #fff;
   border: #00c46c;
   border-radius: 0 0 0 0;
   box-shadow: none;
