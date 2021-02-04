@@ -49,7 +49,7 @@ margin-top: fill;
 
 
 .space-top{
-  margin-top: 30%;
+  margin-top: 20%;
 }
 
 .box, .wrapper{
@@ -87,7 +87,7 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6
 background: #fbfbfb;
 }
 .hero {
-height: 100vh;
+height: calc(100vh - 30px - 60px);
 padding-top: 0;
 margin-bottom: 30px;
 background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/07/palm_oil_plantations/19484718-1-eng-GB/Palm_oil_plantations_pillars.jpg");
