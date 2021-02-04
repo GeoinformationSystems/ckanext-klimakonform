@@ -134,12 +134,12 @@ body {
 
 
 #geokur-map{
-margin: auto;
-width: 60%
+  width: 60%;
 }
 
 #geokur-map-container{
-  height: 300;
+margin: auto;
+height: 400px;
 }
 
 .btn-group.btn-main-map {
