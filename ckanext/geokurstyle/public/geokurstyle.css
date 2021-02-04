@@ -139,10 +139,12 @@ height: 400px;
 width: 60%
 }
 
-.btn-main-map{
-  display: block;
-  margin: auto;
-  width: 60%;
+.btn-group.btn-main-map {
+  display: flex;
+}
+
+.btn-main-map .btn {
+  flex: 1
 }
 
 #geokur-map #dataset-map-edit-buttons {
