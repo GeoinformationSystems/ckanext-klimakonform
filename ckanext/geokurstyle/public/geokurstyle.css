@@ -86,12 +86,15 @@
 
 
 .account-masthead{
-    background:#424242;
-    box-shadow: inset 0px 5px 5px #b63535;
+    background :#424242;
     /* background: #237434 url("../../../base/images/bg.png"); */
 }
 .masthead, .site-footer{
     background: #00c46c;
+}
+
+.masthead{
+  box-shadow: inset 0 3px 3px -2px #424242;
 }
 
 body {
