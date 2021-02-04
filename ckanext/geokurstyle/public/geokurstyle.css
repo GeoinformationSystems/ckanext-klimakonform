@@ -132,7 +132,7 @@ body {
   color: rgb(224, 191, 191);
 }
 
-#geokur-map-attribution{
+#geokur-map #geokur-map-attribution{
   font-size: xx-small;
   text-align: right;
 }
