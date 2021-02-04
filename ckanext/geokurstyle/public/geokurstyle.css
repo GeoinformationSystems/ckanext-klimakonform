@@ -8,6 +8,7 @@
 
 .btn-group.btn-main-map #btn-map-cancel:active{
   color: #fff;
+  background-color: #fbfbfb;
   border: #00c46c;
   border-radius: 0 0 0 0;
   box-shadow: none;
