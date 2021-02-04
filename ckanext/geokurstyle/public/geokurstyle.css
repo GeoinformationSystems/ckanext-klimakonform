@@ -50,7 +50,11 @@ border-radius: 0 0 0 0;
 margin-top: fill;
 }
 
-
+@media (min-width: 768px) and (max-width: 100vh) {
+  .masthead .navigation.section {
+    float: right;
+  }
+}
 
 .space-top{
   margin-top: 20%;
@@ -65,7 +69,7 @@ border-radius: 0 0 0 0;
 
 .space-top .search-form {
   border-bottom: none;
-  width: 70%;
+  width: 75%;
   margin: auto;
   border-radius: 0 0 0 0;
 }
