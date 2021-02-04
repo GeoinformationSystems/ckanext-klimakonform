@@ -69,7 +69,7 @@ this.ckan.module('spatial-query', function ($, _) {
             var extentLayer;
             var previous_box;
             var previous_extent;
-            var is_exanded = false;
+            var is_expanded = false;
             var should_zoom = true;
             var form = $("#dataset-search");
             // CKAN 2.1
@@ -96,7 +96,6 @@ this.ckan.module('spatial-query', function ($, _) {
                 }
             );
 
-            map.setView([51.505, -0.09], 13);
 
             // Initialize the draw control
             map.addControl(new L.Control.Draw({
@@ -112,13 +111,12 @@ this.ckan.module('spatial-query', function ($, _) {
 
             // OK add the expander
             $('a.leaflet-draw-draw-rectangle', module.el).on('click', function (e) {
-                if (!is_exanded) {
-                    $('body').addClass('dataset-map-expanded');
+                if (!is_expanded) {
                     if (should_zoom && !extentLayer) {
                         map.zoomIn();
                     }
                     resetMap();
-                    is_exanded = true;
+                    is_expanded = true;
                 }
             });
 
@@ -127,21 +125,19 @@ this.ckan.module('spatial-query', function ($, _) {
 
             // Handle the cancel expanded action
             $('.cancel', buttons).on('click', function () {
-                $('body').removeClass('dataset-map-expanded');
                 if (extentLayer) {
                     map.removeLayer(extentLayer);
                 }
                 setPreviousExtent();
                 setPreviousBBBox();
                 resetMap();
-                is_exanded = false;
+                is_expanded = false;
             });
 
             // Handle the apply expanded action
             $('.apply', buttons).on('click', function () {
                 if (extentLayer) {
-                    $('body').removeClass('dataset-map-expanded');
-                    is_exanded = false;
+                    is_expanded = false;
                     resetMap();
                     // Eugh, hacky hack.
                     setTimeout(function () {
