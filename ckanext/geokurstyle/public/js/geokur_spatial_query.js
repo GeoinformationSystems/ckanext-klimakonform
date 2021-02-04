@@ -1,6 +1,6 @@
 /* Module for handling the spatial querying
  */
-this.ckan.module('geokur-spatial-query', function ($, _) {
+this.ckan.module('spatial-query', function ($, _) {
 
     return {
         options: {
@@ -88,7 +88,7 @@ this.ckan.module('geokur-spatial-query', function ($, _) {
 
             // OK map time
             map = ckan.commonLeafletMap(
-                'map-container',
+                'dataset-map-container',
                 this.options.map_config,
                 {
                     attributionControl: false,
