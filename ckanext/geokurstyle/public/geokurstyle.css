@@ -35,6 +35,14 @@
   margin-top: fill;
 }
 
+
+@media (min-width: 768px) {
+  .masthead .navigation.section {
+    float: right;
+  }
+}
+
+
 .space-top{
     margin-top: 40px;
 }
