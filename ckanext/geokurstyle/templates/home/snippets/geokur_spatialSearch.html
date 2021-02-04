@@ -10,11 +10,6 @@
         data-module-map_config="{{ h.dump_json(map_config) }}">
         <div id="geokur-map-container"></div>
     </div>
-    <div id="dataset-map-edit-buttons">,
-        <a href="javascript:;" class="btn cancel">Cancel</a>,
-        <a href="javascript:;" class="btn apply disabled">Apply</a>,
-    </div>
-
     <div id="dataset-map-attribution">
         {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
     </div>
