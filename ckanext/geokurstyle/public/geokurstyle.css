@@ -86,8 +86,8 @@ background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/image
 
 
 .account-masthead{
-  min-height: 20px;
-  height: 20px;
+  min-height: 30px;
+  height: 30px;
   background :#424242;
   /* background: #237434 url("../../../base/images/bg.png"); */
 }
