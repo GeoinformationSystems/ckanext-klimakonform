@@ -14,7 +14,8 @@ this.ckan.module('spatial-query', function ($, _) {
                 fillOpacity: 0.1,
                 clickable: false
             },
-            default_extent: [[90, 180], [-90, -180]]
+            default_extent: [[90, 180], [-90, -180]],
+            zoom: 10
         },
         template: {
             buttons: [
@@ -93,7 +94,7 @@ this.ckan.module('spatial-query', function ($, _) {
                 {
                     attributionControl: false,
                     drawControlTooltips: false
-                }.zoom(10)
+                }
             );
 
             // Initialize the draw control
