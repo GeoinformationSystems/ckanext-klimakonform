@@ -93,10 +93,9 @@ this.ckan.module('spatial-query', function ($, _) {
                 {
                     attributionControl: false,
                     drawControlTooltips: false
-                }
+                }.zoom(10)
             );
 
-            map.zoom(10);
             // Initialize the draw control
             map.addControl(new L.Control.Draw({
                 position: 'topright',
