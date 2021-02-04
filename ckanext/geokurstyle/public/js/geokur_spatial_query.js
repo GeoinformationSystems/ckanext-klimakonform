@@ -96,7 +96,7 @@ this.ckan.module('spatial-query', function ($, _) {
                 }
             );
 
-
+            map.setView(50, 51, 5);
             // Initialize the draw control
             map.addControl(new L.Control.Draw({
                 position: 'topright',
