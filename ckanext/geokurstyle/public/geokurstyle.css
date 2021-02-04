@@ -86,20 +86,12 @@
 
 
 .account-masthead{
-    min-height: 20px;
-    height: 20px;
+    min-height: 30px;
+    height: 30px;
     background :#424242;
     /* background: #237434 url("../../../base/images/bg.png"); */
 }
 
-.account-masthead .account ul li a {
-  display: block;
-  color: #bfdecd;
-  font-size: 13px;
-  font-weight: bold;
-  margin-top: 0px;
-  line-height: 31px;
-}
 
 
 .masthead, .site-footer{
@@ -128,7 +120,7 @@ body {
     margin-right: 6px;
 }
 
-#esa-attribution a{
+#esa-attribution a {
     color: rgb(224, 191, 191);
 }
 
@@ -143,6 +135,12 @@ body {
   display: block;
   float: right;
   padding: 10px;
+}
+
+#geokur-map #dataset-map-attribution{
+  font-size: xx-small;
+  text-align: right;
+
 }
 
   

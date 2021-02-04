@@ -121,7 +121,7 @@ this.ckan.module('spatial-query', function ($, _) {
             });
 
             // Setup the expanded buttons
-            buttons = $(module.template.buttons).insertBefore('#dataset-map-attribution');
+            // buttons = $(module.template.buttons).insertBefore('#dataset-map-attribution');
 
             // Handle the cancel expanded action
             $('.cancel', buttons).on('click', function () {
