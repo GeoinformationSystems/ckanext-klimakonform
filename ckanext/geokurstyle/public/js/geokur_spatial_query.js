@@ -166,8 +166,7 @@ this.ckan.module('spatial-query', function ($, _) {
             var previous_bbox;
             setPreviousBBBox();
             setPreviousExtent();
-
-            map.setZoom(3);
+            map.setZoom(2);
 
             // OK, when we expand we shouldn't zoom then
             map.on('zoomstart', function (e) {

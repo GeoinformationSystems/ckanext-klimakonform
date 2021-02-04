@@ -150,11 +150,13 @@ body {
 
 
 #geokur-map{
+  min-width: 720px;
+  width: 90%;  
   margin: auto;
 }
 
 #geokur-map-container{
-height: 600px;
+height: 700px;
 }
 
 .btn-group.btn-main-map {
