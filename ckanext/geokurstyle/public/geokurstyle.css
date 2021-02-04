@@ -2,6 +2,10 @@
   border-radius: 0 0 0 0;
 }
 
+#btn-map-cancel{
+  color: #282e2b;
+}
+
 #btn-map-cancel:active{
   color: #fff;
   border: #00c46c;
