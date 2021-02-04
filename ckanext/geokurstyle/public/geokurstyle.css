@@ -38,6 +38,11 @@
   border-color: #005831;
 }
 
+.masthead{
+  height: 60px;
+  padding: 10px;
+}
+
 .masthead .navigation .nav-pills li a:hover,
 .masthead .navigation .nav-pills li a:focus,
 .masthead .navigation .nav-pills li.active a {
