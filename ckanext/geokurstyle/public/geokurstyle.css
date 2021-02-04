@@ -140,6 +140,7 @@ width: 60%
 }
 
 .btn-main-map{
+  display: block;
   margin: auto;
   width: 60%;
 }
