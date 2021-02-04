@@ -88,7 +88,7 @@ this.ckan.module('spatial-query', function ($, _) {
 
             // OK map time
             map = ckan.commonLeafletMap(
-                'dataset-map-container',
+                'geokur-map-container',
                 this.options.map_config,
                 {
                     attributionControl: false,

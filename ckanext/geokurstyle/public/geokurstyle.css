@@ -110,6 +110,12 @@ body {
 }
 
 
+.dataset-map #geokur-map-container{
+  height: 250px;
+}
 
+.module-narrow #geokur-map-container{
+  height: 200px;
+}
 
   
