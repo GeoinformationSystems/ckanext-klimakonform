@@ -21,7 +21,7 @@
 .btn-primary:focus,
 .btn-primary.focus {
   color: #fff;
-  background-color: #009250;
+  background-color: #00c46c;
   border-color: #020607;
 }
 .btn-primary:hover {
