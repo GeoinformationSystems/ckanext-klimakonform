@@ -112,9 +112,9 @@ this.ckan.module('spatial-query', function ($, _) {
             // OK add the expander
             $('a.leaflet-draw-draw-rectangle', module.el).on('click', function (e) {
                 if (!is_expanded) {
-                    if (should_zoom && !extentLayer) {
-                        map.zoomIn();
-                    }
+                    // if (should_zoom && !extentLayer) {
+                    //     map.zoomIn();
+                    // }
                     resetMap();
                     is_expanded = true;
                 }
@@ -135,7 +135,7 @@ this.ckan.module('spatial-query', function ($, _) {
             });
 
             // Handle the apply expanded action
-            $('#btn-map-apply', buttons).on('click', function () {
+            $("#btn-map-apply").on('click', function () {
                 if (extentLayer) {
                     is_expanded = false;
                     resetMap();
