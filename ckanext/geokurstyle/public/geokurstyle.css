@@ -111,7 +111,9 @@ body {
 
 
 #geokur-map-container{
-  height: 300px;
+  margin: auto;
+  height: 400px;
+  width: 60%
 }
 
   
