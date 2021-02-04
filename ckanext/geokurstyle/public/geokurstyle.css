@@ -40,7 +40,7 @@
 
 .masthead{
   height: 60px;
-  padding: 30px;
+  margin: 30px;
 }
 
 .masthead .navigation .nav-pills li a:hover,
