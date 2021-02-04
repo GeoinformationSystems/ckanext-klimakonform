@@ -14,8 +14,7 @@ this.ckan.module('spatial-query', function ($, _) {
                 fillOpacity: 0.1,
                 clickable: false
             },
-            default_extent: [[90, 180], [-90, -180]],
-            zoom: 10
+            default_extent: [[90, 180], [-90, -180]]
         },
         template: {
             buttons: [
@@ -93,7 +92,8 @@ this.ckan.module('spatial-query', function ($, _) {
                 this.options.map_config,
                 {
                     attributionControl: false,
-                    drawControlTooltips: false
+                    drawControlTooltips: false,
+                    zoom: 10
                 }
             );
 
