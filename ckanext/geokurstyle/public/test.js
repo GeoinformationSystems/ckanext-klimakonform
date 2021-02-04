@@ -1,3 +1,3 @@
 this.ckan.module('geokur-spatial-query', function ($, _) {
-    document.write(5 + 6);
+    document.getElementById('log').innerHTML += '<br>Some new content!';
 });
