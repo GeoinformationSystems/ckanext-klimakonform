@@ -21,12 +21,15 @@
 #}
 
 
-<p>test</p>
+<!-- <p>test</p>
 {% set map_config = h.get_common_map_config() %}
 <div class="geokur-map" data-module="geokur-spatial-query" data-default_extent="{{ default_extent }}"
     data-module-map_config="{{ h.dump_json(map_config) }}">
     <div id="map-container"></div>
+</div> -->
+
+<div data-module="test">
+
 </div>
 
-
-{% resource "ckanext-geokurstyle/geokur_spatial_query.js" %}
+{% resource "ckanext-geokurstyle/test.js" %}
