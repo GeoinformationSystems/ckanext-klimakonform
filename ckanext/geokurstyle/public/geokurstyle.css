@@ -68,15 +68,18 @@
 .module-grid, .media-grid{
     background: #fbfbfb
 }
-@media {
-    .main{
-      background: #fbfbfb;
-    }
-    .hero {
-        padding-top: 0;
-      background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/07/palm_oil_plantations/19484718-1-eng-GB/Palm_oil_plantations_pillars.jpg");
-    }
+
+
+.main{
+  background: #fbfbfb;
 }
+.hero {
+  padding-top: 0;
+  margin-bottom: 30pt;
+  background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/07/palm_oil_plantations/19484718-1-eng-GB/Palm_oil_plantations_pillars.jpg");
+
+}
+
 
 
 .account-masthead{
