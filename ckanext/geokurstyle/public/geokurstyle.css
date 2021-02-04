@@ -134,11 +134,11 @@ body {
 
 
 #geokur-map{
-  width: 60%;
+  width: 60%;  
+  margin: auto;
 }
 
 #geokur-map-container{
-margin: auto;
 height: 400px;
 }
 
