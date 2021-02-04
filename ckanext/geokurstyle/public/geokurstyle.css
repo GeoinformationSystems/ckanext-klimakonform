@@ -2,12 +2,10 @@
   border-radius: 0 0 0 0;
 }
 
-.btn-group > .btn,
-.btn-group > .btn:active,
-.btn-group > .btn:visited,
-.btn-group > .btn:hover,
-.btn-group > .btn:focus{
+#btn-map-cancel::after{
+  border: #00c46c;
   border-radius: 0 0 0 0;
+  box-shadow: none;
 }
 
 .btn-primary {
