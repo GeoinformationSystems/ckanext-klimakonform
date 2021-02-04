@@ -86,7 +86,8 @@
 
 
 .account-masthead{
-    min-height: 25px;;
+    min-height: 25px;
+    height: 25px;
     background :#424242;
     /* background: #237434 url("../../../base/images/bg.png"); */
 }
