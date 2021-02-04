@@ -1,6 +1,15 @@
 .btn {
   border-radius: 0 0 0 0;
 }
+
+.btn-group > .btn,
+.btn-group > .btn:active,
+.btn-group > .btn:visited,
+.btn-group > .btn:hover,
+.btn-group > .btn:focus{
+  border-radius: 0 0 0 0;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #00c46c;
@@ -139,6 +148,7 @@ body {
 
 
 #geokur-map{
+  min-width: 720px;
   width: 60%;  
   margin: auto;
 }
