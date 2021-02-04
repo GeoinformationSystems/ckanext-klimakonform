@@ -92,8 +92,7 @@ this.ckan.module('spatial-query', function ($, _) {
                 this.options.map_config,
                 {
                     attributionControl: false,
-                    drawControlTooltips: false,
-                    zoom: 10
+                    drawControlTooltips: false
                 }
             );
 
