@@ -96,7 +96,6 @@ this.ckan.module('spatial-query', function ($, _) {
                 }
             );
 
-            map.setView([0, 0], 3);
 
             // Initialize the draw control
             map.addControl(new L.Control.Draw({
@@ -167,6 +166,8 @@ this.ckan.module('spatial-query', function ($, _) {
             var previous_bbox;
             setPreviousBBBox();
             setPreviousExtent();
+
+            map.setView([0, 0], 3);
 
             // OK, when we expand we shouldn't zoom then
             map.on('zoomstart', function (e) {
