@@ -5,11 +5,10 @@
 
 
 .btn.btn-primary:active{
-  color: #fff;
-  background-color: #fbfbfb;
-  border: #00c46c;
   border-radius: 0 0 0 0;
   box-shadow: none;
+  outline: none;
+
 }
 
 .btn-primary {
