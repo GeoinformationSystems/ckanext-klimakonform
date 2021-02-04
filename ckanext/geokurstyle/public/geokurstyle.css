@@ -36,7 +36,7 @@
 }
 
 .space-top{
-    margin-top: 30pt;
+    margin-top: 40px;
 }
 
 .box, .wrapper{
@@ -74,8 +74,9 @@
   background: #fbfbfb;
 }
 .hero {
+  height: calc(100% - (30px+90px));
   padding-top: 0;
-  margin-bottom: 30pt;
+  margin-bottom: 30px;
   background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2019/07/palm_oil_plantations/19484718-1-eng-GB/Palm_oil_plantations_pillars.jpg");
 
 }
@@ -105,7 +106,7 @@ body {
     right:0;
     font-size: xx-small;
     text-align: right;
-    margin-right: 4pt;
+    margin-right: 6px;
 }
 
 #esa-attribution a{
