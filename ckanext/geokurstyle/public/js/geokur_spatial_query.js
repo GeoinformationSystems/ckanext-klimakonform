@@ -124,7 +124,7 @@ this.ckan.module('spatial-query', function ($, _) {
             buttons = $(module.template.buttons).insertBefore('#dataset-map-attribution');
 
             // Handle the cancel expanded action
-            $('.cancel', buttons).on('click', function () {
+            $("#btn-map-cancel").on('click', function () {
                 if (extentLayer) {
                     map.removeLayer(extentLayer);
                 }
@@ -135,7 +135,7 @@ this.ckan.module('spatial-query', function ($, _) {
             });
 
             // Handle the apply expanded action
-            $('.apply', buttons).on('click', function () {
+            $('#btn-map-apply', buttons).on('click', function () {
                 if (extentLayer) {
                     is_expanded = false;
                     resetMap();
