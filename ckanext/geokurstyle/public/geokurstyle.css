@@ -5,7 +5,7 @@
 
 
 .btn.btn-primary:active,
-.btn.btn-primary:visited{
+.btn.btn-primary:focus{
   border-radius: 0 0 0 0;
   box-shadow: none;
   outline: none;
