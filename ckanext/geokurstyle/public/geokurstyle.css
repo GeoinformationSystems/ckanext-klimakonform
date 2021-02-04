@@ -4,7 +4,8 @@
 
 
 
-.btn.btn-primary:active{
+.btn.btn-primary:active,
+.btn.btn-primary:visited{
   border-radius: 0 0 0 0;
   box-shadow: none;
   outline: none;
