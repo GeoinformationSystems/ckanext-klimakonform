@@ -177,7 +177,7 @@ float: right;
 padding: 10px;
 }
 
-@media (max-width: 100vh) {
+@media (max-width: 500px) {
   .navbar-toggle {
     margin-right: 0;
   }
@@ -196,13 +196,13 @@ padding: 10px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 100vh) {
+@media (min-width: 768px) and (max-width: 500px) {
   .masthead .navigation.section {
     float: right;
   }
 }
 
-@media (max-width: 100vh) {
+@media (max-width: 500px) {
   .masthead .navbar-collapse {
     clear: both;
     margin-left: 0;
@@ -210,12 +210,12 @@ padding: 10px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 100vh) {
+@media (min-width: 768px) and (max-width: 500px) {
   .site-footer .navigation.section {
     float: right;
   }
 }
-@media (max-width: 100vh) {
+@media (max-width: 500px) {
   .navbar-nav .open .dropdown-menu {
     position: static;
     float: none;
@@ -238,7 +238,7 @@ padding: 10px;
   }
 }
 
-@media (max-width: 100vh) {
+@media (max-width: 500px) {
   .navbar-form .form-group {
     margin-bottom: 5px;
   }
@@ -247,7 +247,7 @@ padding: 10px;
   }
 }
 
-@media (max-width: 100vh) {
+@media (max-width: 500px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #777;
   }
@@ -270,7 +270,7 @@ padding: 10px;
   }
 }
 
-@media (max-width: 100vh) {
+@media (max-width: 500px) {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
     border-color: #080808;
   }
