@@ -86,12 +86,23 @@
 
 
 .account-masthead{
-    padding: auto;
     min-height: 25px;
     height: 25px;
     background :#424242;
     /* background: #237434 url("../../../base/images/bg.png"); */
 }
+
+.account-masthead .account ul li a {
+  display: block;
+  color: #bfdecd;
+  font-size: 13px;
+  font-weight: bold;
+  padding: auto;
+  margin: auto;
+  line-height: 31px;
+}
+
+
 .masthead, .site-footer{
     background: #00c46c;
 }
