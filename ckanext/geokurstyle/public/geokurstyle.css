@@ -6,7 +6,7 @@
   color: #282e2b;
 }
 
-#btn-map-cancel:active{
+.btn-group.btn-main-map #btn-map-cancel:active{
   color: #fff;
   border: #00c46c;
   border-radius: 0 0 0 0;
