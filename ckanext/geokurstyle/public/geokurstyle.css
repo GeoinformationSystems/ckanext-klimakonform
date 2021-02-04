@@ -138,7 +138,9 @@ margin: auto;
 width: 60%
 }
 
-
+#geokur-map-container{
+  height: 300;
+}
 
 .btn-group.btn-main-map {
   display: flex;
