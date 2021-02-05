@@ -16,15 +16,6 @@ this.ckan.module('spatial-query', function ($, _) {
             },
             default_extent: [[90, 180], [-90, -180]]
         },
-        template: {
-            buttons: [
-                '<div id="dataset-map-edit-buttons">',
-                '<a href="javascript:;" class="btn cancel">Cancel</a> ',
-                '<a href="javascript:;" class="btn apply disabled">Apply</a>',
-                '</div>'
-            ].join('')
-        },
-
         initialize: function () {
             var module = this;
             $.proxyAll(this, /_on/);
@@ -67,17 +58,8 @@ this.ckan.module('spatial-query', function ($, _) {
             var module = this;
             var map;
             var extentLayer;
-            var previous_box;
-            var previous_extent;
-            var is_expanded = false;
             var should_zoom = true;
             var form = $("#dataset-search");
-            // CKAN 2.1
-            if (!form.length) {
-                form = $(".search-form");
-            }
-
-            var buttons;
 
             // Add necessary fields to the search form if not already created
             $(['ext_bbox', 'ext_prev_extent']).each(function (index, item) {
@@ -109,10 +91,6 @@ this.ckan.module('spatial-query', function ($, _) {
                 }
             }));
 
-
-
-            // Setup the expanded buttons
-
             // Handle the cancel expanded action
             $("#btn-map-cancel").on('click', function () {
                 if (extentLayer) {
@@ -141,7 +119,6 @@ this.ckan.module('spatial-query', function ($, _) {
                 extentLayer = e.layer;
                 $('#ext_bbox').val(extentLayer.getBounds().toBBoxString());
                 map.addLayer(extentLayer);
-                $('.apply', buttons).removeClass('disabled').addClass('btn-primary');
             });
 
             // Record the current map view so we can replicate it after submitting
