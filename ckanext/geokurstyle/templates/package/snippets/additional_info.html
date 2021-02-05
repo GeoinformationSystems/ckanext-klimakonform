@@ -1,3 +1,14 @@
 {% extends "package/snippets/additional_info.html" %}
-
-{% exclude_fields.append('spatial') %}
+{% block exclude_fields %}
+{%- set exclude_fields = [
+'id',
+'title',
+'notes',
+'tag_string',
+'license_id',
+'owner_org',
+'temporal_start',
+'temporal_end',
+'spatial'
+] -%}
+{% endblock %}
