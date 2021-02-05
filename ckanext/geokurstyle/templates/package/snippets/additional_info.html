@@ -1,4 +1,3 @@
-{% ckan_extends %}
 <section class="additional-info">
     <h3>{{ _('Metadata') }}</h3>
     <table class="table table-striped table-bordered table-condensed">
@@ -9,8 +8,9 @@
             </tr>
         </thead>
         <tbody>
+            {%ckan_extends%}
             {% block package_additional_info %}
-            {{super()}}
+            {{{super()}
             {% endblock %}
         </tbody>
     </table>
