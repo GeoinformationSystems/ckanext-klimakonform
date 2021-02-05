@@ -129,8 +129,8 @@ this.ckan.module('spatial-query', function ($, _) {
                 }
                 setPreviousExtent();
                 setPreviousBBBox();
-                map.setView([20, 0], 3);
                 resetMap();
+                map.setView([20, 0], 3);
                 is_expanded = false;
             });
 
