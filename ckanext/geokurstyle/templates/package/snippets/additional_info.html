@@ -1,6 +1,22 @@
 {% ckan_extends %}
+{% block package_additional_info %}
+{{super()}}
+{% if pkg_dict.author_email %}
+<tr>
+    <th scope="row" class="dataset-label">{{ _("Author") }}</th>
+    <td class="dataset-details" property="dc:creator">{{ h.mail_to(email_address=pkg_dict.author_email,
+        name=pkg_dict.author) }}</td>
+</tr>
+{% elif pkg_dict.author %}
+<tr>
+    <th scope="row" class="dataset-label">{{ _("Author") }}</th>
+    <td class="dataset-details" property="dc:creator">{{ pkg_dict.author }}</td>
+</tr>
+{% endif %}
+{% endblock %}
 
-{% block extras scoped %}
+
+<!-- {% block extras scoped %}
 {% for extra in h.sorted_extras(pkg_dict.extras) %}
 {% set key, value = extra %}
 <tr rel="dc:relation" resource="_:extra{{ i }}">
@@ -12,4 +28,4 @@
 {% set key, value = extra %}
 <p>{{key}} {{value}}</p><br>
 {% endfor %}
-{% endblock %}
+{% endblock %} -->
