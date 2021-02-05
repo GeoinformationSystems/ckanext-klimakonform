@@ -176,3 +176,11 @@ display: block;
 float: right;
 padding: 10px;
 }
+
+.geokur-map .leaflet-draw-draw-rectangle{
+background-color: lightcoral;
+}
+
+.container{
+  width: calc(100vw -30px)
+}
