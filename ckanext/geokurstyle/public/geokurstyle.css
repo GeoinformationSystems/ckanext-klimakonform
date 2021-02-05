@@ -181,7 +181,10 @@ padding: 10px;
 background-color: lightcoral;
 }
 
-.account-masthead .container{
-  width: 100vw;
+.account-masthead .container,
+.masthead .container{
+  width: calc(100vw - 30px);
 }
+
+
 
