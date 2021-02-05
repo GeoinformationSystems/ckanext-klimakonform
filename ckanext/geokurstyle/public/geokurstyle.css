@@ -178,7 +178,7 @@ padding: 10px;
 }
 
 #geokur-map-container .leaflet-draw-draw-rectangle{
-  box-shadow: 0 0px 5px 3px lightcoral;
+  box-shadow: 0 0px 3px 2px lightcoral;
 }
 
 .account-masthead .container,
