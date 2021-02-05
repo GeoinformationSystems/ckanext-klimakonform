@@ -38,9 +38,13 @@
   border-color: #005831;
 }
 
+.site-footer{
+  background: #00c46c;
+}
+
 .masthead{
   height: 85px;  
-  background: url("../../../Palm_oil_plantations_pillars_masthead.jpg");
+  background: #00c46c, url("../../../Palm_oil_plantations_pillars_masthead.jpg");
   opacity: 0.8;
 }
 
@@ -117,10 +121,6 @@ margin-top: 0px;
 line-height: 31px;
 }
 
-
-.masthead, .site-footer{
-  background: #00c46c;
-}
 
 .masthead{
 box-shadow: inset 0 5px 5px -3px #919191;
