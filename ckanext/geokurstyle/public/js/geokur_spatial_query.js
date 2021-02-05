@@ -59,10 +59,6 @@ this.ckan.module('spatial-query', function ($, _) {
             var module = this;
             var map;
             var extentLayer;
-            var previous_box;
-            var previous_extent;
-            var is_expanded = false;
-            var should_zoom = true;
             var form = $("#dataset-search");
             // CKAN 2.1
             if (!form.length) {
