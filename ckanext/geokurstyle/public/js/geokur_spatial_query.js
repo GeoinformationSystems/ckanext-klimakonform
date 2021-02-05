@@ -127,8 +127,9 @@ this.ckan.module('spatial-query', function ($, _) {
                 if (extentLayer) {
                     map.removeLayer(extentLayer);
                 }
-                setPreviousExtent();
-                setPreviousBBBox();
+                // setPreviousExtent();
+                // setPreviousBBBox();
+                resetMap();
                 map.setView([20, 0], 3);
                 is_expanded = false;
             });
@@ -164,8 +165,8 @@ this.ckan.module('spatial-query', function ($, _) {
 
             // Ok setup the default state for the map
             var previous_bbox;
-            setPreviousBBBox();
-            setPreviousExtent();
+            // setPreviousBBBox();
+            // setPreviousExtent();
             map.setView([20, 0], 3);
 
             // OK, when we expand we shouldn't zoom then
