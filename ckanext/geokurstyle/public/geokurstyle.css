@@ -44,7 +44,7 @@
 
 .masthead{
   height: 85px;  
-  background:rgba(0, 196, 108, 0.8) url("../../../Palm_oil_plantations_pillars_masthead.jpg");
+  background: #00c46c url("../../../Palm_oil_plantations_pillars_masthead.png");
 }
 
 .masthead .navigation .nav-pills li a:hover,
@@ -99,7 +99,7 @@ background: #fbfbfb;
 height: calc(100vh - 30px - 85px);
 padding-top: 0;
 margin-bottom: 30px;
-background: url("../../../Palm_oil_plantations_pillars_hero.jpg");
+background: url("../../../Palm_oil_plantations_pillars_hero.png");
 }
 
 
