@@ -128,8 +128,6 @@ this.ckan.module('spatial-query', function ($, _) {
                     map.removeLayer(extentLayer);
                 }
                 resetMap();
-                map.setView([20, 0], 3);
-                is_expanded = false;
             });
 
             // Handle the apply expanded action
