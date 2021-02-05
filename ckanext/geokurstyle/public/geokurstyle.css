@@ -177,7 +177,7 @@ float: right;
 padding: 10px;
 }
 
-.geokur-map .leaflet-draw-draw-rectangle{
+#geokur-map-container .leaflet-draw-toolbar{
 background-color: lightcoral;
 }
 
