@@ -37,16 +37,10 @@
             {% block extras scoped %}
             {% for extra in h.sorted_extras(pkg_dict.extras) %}
             {% set key, value = extra %}
-            <!-- {% if key not 'spatial' %} -->
-            {% if pkg_dict.metadata_created %}
-            <tr>
-                <th scope="row" class="dataset-label">{{ _("Created") }}</th>
-
-                <td class="dataset-details">
-                    {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg_dict.metadata_created %}
-                </td>
+            <tr rel="dc:relation" resource="_:extra{{ i }}">
+                <th> kljklk </th>
+                <td> jkhjkh</td>
             </tr>
-            <!-- {% endif %} -->
             {% endfor %}
             {% endblock %}
 
