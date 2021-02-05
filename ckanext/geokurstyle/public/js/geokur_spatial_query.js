@@ -16,14 +16,6 @@ this.ckan.module('spatial-query', function ($, _) {
             },
             default_extent: [[90, 180], [-90, -180]]
         },
-        template: {
-            buttons: [
-                '<div id="dataset-map-edit-buttons">',
-                '<a href="javascript:;" class="btn cancel">Cancel</a> ',
-                '<a href="javascript:;" class="btn apply disabled">Apply</a>',
-                '</div>'
-            ].join('')
-        },
 
         initialize: function () {
             var module = this;
@@ -77,8 +69,6 @@ this.ckan.module('spatial-query', function ($, _) {
                 form = $(".search-form");
             }
 
-            var buttons;
-
             // Add necessary fields to the search form if not already created
             $(['ext_bbox', 'ext_prev_extent']).each(function (index, item) {
                 if ($("#" + item).length === 0) {
@@ -108,10 +98,6 @@ this.ckan.module('spatial-query', function ($, _) {
                     rectangle: { shapeOptions: module.options.style }
                 }
             }));
-
-
-
-            // Setup the expanded buttons
 
             // Handle the cancel expanded action
             $("#btn-map-cancel").on('click', function () {
