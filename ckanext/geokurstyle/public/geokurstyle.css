@@ -94,7 +94,7 @@ background: #fbfbfb;
 height: calc(100vh - 30px - 85px);
 padding-top: 0;
 margin-bottom: 30px;
-background: url("ckanext-geokurstyle/Palm_oil_plantations_pillars.jpg");
+background: url("../../../Palm_oil_plantations_pillars.jpg");
 }
 
 
