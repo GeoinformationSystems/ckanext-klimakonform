@@ -184,3 +184,19 @@ background-color: lightcoral;
 .container{
   width: calc(100vw -30px)
 }
+
+@media (min-width: 768px) {
+  .container {
+    width: calc(100vw -30px)
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: calc(100vw -30px)
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: calc(100vw -30px)
+  }
+}
