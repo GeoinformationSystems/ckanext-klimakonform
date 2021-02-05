@@ -127,8 +127,6 @@ this.ckan.module('spatial-query', function ($, _) {
                 if (extentLayer) {
                     map.removeLayer(extentLayer);
                 }
-                // setPreviousExtent();
-                // setPreviousBBBox();
                 resetMap();
                 map.setView([20, 0], 3);
                 is_expanded = false;
@@ -164,40 +162,12 @@ this.ckan.module('spatial-query', function ($, _) {
             });
 
             // Ok setup the default state for the map
-            var previous_bbox;
-            // setPreviousBBBox();
-            // setPreviousExtent();
-            map.setView([20, 0], 3);
+            map.setView([23, 0], 3);
 
             // OK, when we expand we shouldn't zoom then
             map.on('zoomstart', function (e) {
                 should_zoom = false;
             });
-
-
-            // Is there an existing box from a previous search?
-            function setPreviousBBBox() {
-                previous_bbox = module._getParameterByName('ext_bbox');
-                if (previous_bbox) {
-                    $('#ext_bbox').val(previous_bbox);
-                    extentLayer = module._drawExtentFromCoords(previous_bbox.split(','))
-                    map.addLayer(extentLayer);
-                    map.fitBounds(extentLayer.getBounds());
-                }
-            }
-
-            // Is there an existing extent from a previous search?
-            function setPreviousExtent() {
-                previous_extent = module._getParameterByName('ext_prev_extent');
-                if (previous_extent) {
-                    coords = previous_extent.split(',');
-                    map.fitBounds([[coords[1], coords[0]], [coords[3], coords[2]]]);
-                } else {
-                    if (!previous_bbox) {
-                        map.fitBounds(module.options.default_extent);
-                    }
-                }
-            }
 
 
 
