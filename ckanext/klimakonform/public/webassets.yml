@@ -1,7 +1,7 @@
-geokurstyle_css:
-  output: ckanext-geokurstyle/%(version)s_geokurstyle.css
+klimakonform_css:
+  output: ckanext-klimakonform/%(version)s_klimakonform.css
   extra:
     preload:
       - base/main
   contents:
-    - geokurstyle.css
+    - klimakonform.css
