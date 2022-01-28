@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
+
 * {
   font-family: Play, sans-serif;
 }
@@ -86,7 +88,6 @@ color: #626b72;
   border-color: #a0b84a; 
   color: #626b72;
 }
-
 
 /* Remove the "box shadow" effect around various boxes on the page. */
 .box {
