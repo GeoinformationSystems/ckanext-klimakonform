@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='''ckanext-geokurstyle''',
+    name='''ckanext-klimakonform''',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -21,11 +21,11 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/rue-a/ckanext-geokurstyle',
+    url='https://github.com/GeoinformationSystems/ckanext-klimakonform',
 
     # Author details
-    author='''arne ruemmler''',
-    author_email='''arne.ruemmler''',
+    author='''Geoinformation TUD''',
+    author_email='''''',
 
     # Choose your license
     license='AGPL',
@@ -80,7 +80,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [ckan.plugins]
-        geokurstyle=ckanext.geokurstyle.plugin:GeokurstylePlugin
+        klimakonform=ckanext.klimakonform.plugin:KlimakonformPlugin
 
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan
