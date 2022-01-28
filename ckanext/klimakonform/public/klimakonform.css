@@ -1,186 +1,152 @@
-.btn {
-  border-radius: 0 0 0 0;
+* {
+  font-family: Play, sans-serif;
 }
 
+/* =====================================================
+   The "account masthead" bar across the top of the site
+   ===================================================== */
 
-
-.btn.btn-primary:active,
-.btn.btn-primary:focus{
-  border-radius: 0 0 0 0;
-  box-shadow: none;
-  outline: none;
-
+.account-masthead {
+background-color: white;
+color: #626b72;
+}
+/* The "bubble" containing the number of new notifications. */
+.account-masthead .account .notifications a span {
+  background-color: white;
+  color: #626b72;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #00c46c;
-  border-color: #1b5a6e;    
-  border-width: 0;
+.span.badge {
+  background-color: white;
+  color: #626b72;
 }
-.btn-primary:focus,
-.btn-primary.focus {
-  color: #fff;
-  background-color: #00c46c;
-  border-color: #020607;
-}
-.btn-primary:hover {
-  color: #fff;
-  background-color: #009250;
-  border-color: #005831;
-}
-.btn-primary:active,
-.btn-primary.active,
-.open > .dropdown-toggle.btn-primary {
-  color: #fff;
-  background-color: #164959;
-  background-image: none;
-  border-color: #005831;
-}
-
-.site-footer{
-  background: #00c46c;
-}
-
-.masthead{
-  height: 85px;  
-  background: #00c46c url("../../../Palm_oil_plantations_pillars_masthead.png");
-  box-shadow: inset 0 5px 5px -3px #919191;
-}
-
-.masthead .navigation .nav-pills li a:hover,
-.masthead .navigation .nav-pills li a:focus,
-.masthead .navigation .nav-pills li.active a {
-background-color:#005831;
-border-radius: 0 0 0 0;
-margin-top: fill;
-}
-
-.space-top{
-  margin-top: 20%;
-}
-
-.box, .wrapper{
-background-color: #fbfbfb;
-box-shadow: none;
-border: none;
-border-radius: 0 0 0 0;
-}
-
-.space-top .search-form {
-  border-bottom: none;
-  width: 75%;
-  margin: auto;
-  border-radius: 0 0 0 0;
-}
-
-.form-control {    
-border: 1px solid #ccc;
-border-radius: 0 0 0 0;
-box-shadow: none;
-}
-.form-control:focus {
-border-color:#00c46c;
-outline: 0;
--webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-
-.module-grid, .media-grid{
-  background: #fbfbfb
-}
-
-
-.main{
-background: #fbfbfb;
-}
-.hero {
-height: calc(100vh - 30px - 85px);
-padding-top: 0;
-margin-bottom: 30px;
-background: url("../../../Palm_oil_plantations_pillars_hero.jpg");
-box-shadow: inset 0 3px 3px -3px #919191;
-}
-
-
-
-.account-masthead{
-  min-height: 30px;
-  height: 30px;
-  background :#F5F5F5;
-  /* background: #237434 url("../../../base/images/bg.png"); */
-}
-
+/* The text and icons in the user account info. */
 .account-masthead .account ul li a {
-display: block;
-color: #282e2b;
-font-size: 13px;
-font-weight: bold;
-margin-top: 0px;
-line-height: 31px;
+  background-color: white;
+  color: #626b72;
+}
+/* The user account info text and icons, when the user's pointer is hovering
+   over them. */
+.account-masthead .account ul li a:hover {
+  background-color: #a0b84a;
+  color: white;
 }
 
+
+/* ========================================================================
+   The main masthead bar that contains the site logo, nav links, and search
+   ======================================================================== */
+
+.masthead {
+  border-style: solid;
+  border-color: #a0b84a; 
+  background-color: white;
+  color: black;
+}
+/* The "navigation pills" in the masthead (the links to Datasets,
+   Organizations, etc) when the user's pointer hovers over them. */
+  .masthead .navigation .nav-pills li a {
+  border-style: solid;
+  border-color: #a0b84a; 
+  border-width: medium;
+  background-color: white;
+  color: #626b72;
+}
+   .masthead .navigation .nav-pills li a:hover {
+  background-color: #a0b84a;
+  color: white;
+}
+/* The "active" navigation pill (for example, when you're on the /dataset page
+   the "Datasets" link is active). */
+.masthead .navigation .nav-pills li.active a {
+  background-color: #a0b84a;
+  color: white;
+}
+/* The "box shadow" effect that appears around the search box when it
+   has the keyboard cursor's focus. */
+.masthead input[type="text"]:focus {
+  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
+}
+
+
+/* ===========================================
+   The content in the middle of the front page
+   =========================================== */
+.homepage {
+  background-color: white;
+}
+.btn {
+  background-color: #a0b84a;
+  border-color: #a0b84a; 
+  color: white;
+}
+.btn:hover{
+  background-color: white;
+  border-color: #a0b84a; 
+  color: #626b72;
+}
+
+
+/* Remove the "box shadow" effect around various boxes on the page. */
+.box {
+  box-shadow: none;
+}
+/* Remove the borders around the "Welcome to CKAN" and "Search Your Data"
+   boxes. */
+.hero .box {
+  border: none;
+}
+/* Change the colors of the "Search Your Data" box. */
+.homepage .module-search .module-content {
+  border-style: solid;
+  border-color: #a0b84a; 
+  border-width: thin;
+  background-color: #a0b84a;
+  color: white;
+}
+/* Change the background color of the "Popular Tags" box. */
+.homepage .module-search .tags {
+  border-style: solid;
+  border-color: #a0b84a; 
+  border-width: medium;
+  background-color: white;
+  color: #626b72;
+}
+.homepage .module-search .tags .tag:hover{
+  background-color: #a0b84a;
+  border-color: #a0b84a; 
+  color: white;
+}
+/* Remove some padding. This makes the bottom edges of the "Welcome to CKAN"
+   and "Search Your Data" boxes line up. */
+.module-content:last-child {
+  padding-bottom: 0px;
+}
+.homepage .module-search {
+  padding: 0px;
+}
+/* Add a border line between the top and bottom halves of the front page. */
+.homepage [role="main"] {
+  border-top: 1px solid rgb(204, 204, 204);
+}
+
+
+/* ====================================
+   The footer at the bottom of the site
+   ==================================== */
+
+.site-footer,
 body {
-  background: #fbfbfb;
+  background-color: rgb(40, 40, 40);
 }
-
-.collapse.navbar-collapse .section.navigation{
-  font-size: large;
+/* The text in the footer. */
+.site-footer,
+.site-footer label,
+.site-footer small {
+  color: rgba(255, 255, 255, 0.6);
 }
-
-#esa-attribution{
-  color: #ccc;
-  position:absolute;
-  bottom:0;
-  right:0;
-  font-size: xx-small;
-  text-align: right;
-  margin-right: 6px;
+/* The link texts in the footer. */
+.site-footer a {
+  color: rgba(255, 255, 255, 0.6);
 }
-
-#esa-attribution a{
-  color: rgb(224, 191, 191);
-}
-
-#geokur-map-attribution{
-  font-size: xx-small;
-  text-align: right;
-  margin-bottom: 40px;
-}
-
-
-#geokur-map{
-  min-width: 720px;
-  width: 80%;  
-  margin: auto;
-}
-
-#geokur-map-container{
-height: 700px;
-}
-
-.btn-group.btn-main-map {
-  display: flex;
-}
-
-.btn-main-map .btn {
-  flex: 1
-}
-
-#geokur-map #dataset-map-edit-buttons {
-display: block;
-float: right;
-padding: 10px;
-}
-
-#geokur-map-container .leaflet-draw-draw-rectangle{
-  box-shadow: 0 0px 3px 2px lightcoral;
-}
-
-.account-masthead .container,
-.masthead .container{
-  width: calc(100vw - 30px);
-}
-
-
-
