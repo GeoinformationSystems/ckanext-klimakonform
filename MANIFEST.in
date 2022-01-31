@@ -1,4 +1,4 @@
 include README.rst
 include LICENSE
 include requirements.txt
-recursive-include ckanext/geokurstyle *.html *.json *.js *.less *.css *.mo
+recursive-include ckanext/klimakonform *.html *.json *.js *.less *.css *.mo
