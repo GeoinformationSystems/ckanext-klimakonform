@@ -69,7 +69,125 @@
                 {% endfor %}
               </tbody>
             </table>
+          
+          {% elif 'Rasterdaten' in org['display_name']%}
+            <!--This dict comes from "public/rekis_ascii_file_naming.yml"
+            Goal is to use this dictionary to make template code cleaner and 
+            easier to configure if new files have to be included -->
+
             
+            
+            {% set resource_dict = h.update_resource_info(resources) %}
+            
+            {% set list_time_periods =  h.get_unique_set_of_time_periods(resource_dict) %}
+            {% set list_seasons =  h.get_unique_set_of_seasons(resource_dict) %}
+            {% set list_themes =  h.get_unique_set_of_themes(resource_dict) %}
+
+            {% for item in list_time_periods %}
+            {% set item_id = item.replace(' ', '')%}
+            <p>
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{item_id}}" aria-expanded="false" aria-controls="collapseExample">
+                {{item}}
+              </button>
+            </p>
+            <div class="collapse" id="{{item_id}}">
+              {% for theme  in list_themes %}
+                <div class="card card-body", div style="text-indent:30px;">
+                  <p>
+                    {% for resource in resource_dict %}  
+                        {% set time_param =  resource['time_period_composite'].replace(' ', '') %}                    
+                        {% if theme == resource['theme']['name'] and item_id == time_param %}
+                          <a class="btn btn-primary resource-url-analytics resource-type-{{ resource.resource_type }}" href="{{ resource.url }}">
+                                    <i class="fa fa-arrow-circle-o-down"></i>
+                                    {{theme
+                                      .replace('ue', 'ü')
+                                      .replace('Ue', 'ü')
+                                      .replace('ae', 'ä')
+                                      .replace('Ae', 'Ä')}}
+                          </a>
+                        {% endif %}
+                        
+
+                    {% endfor %}
+
+                  </p>
+                </div>
+              {% endfor %}
+              
+            </div>
+			      {% endfor %}
+
+              <!--
+              <div class="collapse" data-toggle="collapse" id="{{item}}">
+                {% for theme in list_themes_unique %}
+                <p>{{theme}}</p>
+                  <div style="text-indent:30px;" data-toggle="collapse" data-target="#{{theme}}">
+                    
+             
+                    <p>
+                      <button class="btn btn-primary" >{{theme}}</button>
+                      <div class="collapse" style="text-indent:60px;" data-toggle="collapse" id="{{theme}}"  data-target="#{{theme}}">
+                        <table class="table table-condensed">
+                          <thead>
+                            <tr>
+                              <td scope="col">{{ _('Datensatz') }}</td>
+                              <td scope="col">{{ _('Download') }}</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {%for resource in resources %}
+                              {% if (resource['theme'] == theme) and item in resource['url'] %}
+                              <tr>
+                                <td>{{resource['name']}}</td>
+                                <td>
+                                  <a class="btn btn-primary resource-url-analytics resource-type-{{ resource.resource_type }}" href="{{ resource.url }}">
+                                    <i class="fa fa-arrow-circle-o-down"></i>
+                                    {{ _('Download') }}
+                                  </a>
+                                </td>
+                              </tr>  
+                              {% endif %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+  
+                      </div>
+                    </p>
+               
+                  </div>
+                {% endfor %}
+              </div>
+                 -->
+      
+
+            <!--
+            <table class="table table-striped table-bordered table-condensed">
+              <thead>
+                <tr>
+                  <th scope="col">{{ _('Datenthema') }}</th>
+                  <th scope="col">{{ _('Periode') }}</th>
+                  <th scope="col">{{ _('Beschreibung') }}</th>
+                  <th scope="col">{{ _('Download') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                              
+                {% for resource in resources %}
+                <tr>
+                  <td>{{resource['name']}}</td>
+                  <td>{{resource['start_period']}} - {{resource['end_period']}}</td>
+                  <td>{{resource['season']}}</td>
+                  <td>
+                    <a class="btn btn-primary resource-url-analytics resource-type-{{ resource.resource_type }}" href="{{ resource.url }}">
+                      <i class="fa fa-arrow-circle-o-down"></i>
+                      {{ _('Download') }}
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            -->
           {% else %}
             <ul class="{% block resource_list_class %}resource-list{% endblock %}">
                 {% set can_edit = h.check_access('package_update', {'id':pkg.id }) and not is_activity_archive %}

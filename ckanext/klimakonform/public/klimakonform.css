@@ -90,6 +90,27 @@ color: #626b72;
   color: #626b72;
 }
 
+.main .container .toolbar{
+  background-image: url("https://rekisviewer.hydro.tu-dresden.de/fdm/files/naviBackground.png");
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.main .container .toolbar .breadcrumb {
+  padding-left: 20px;
+}
+
+
+.main .container .toolbar .breadcrumb .active .a{
+  
+  color: white;
+}
+
+
+#content > div.toolbar > ol > li > a {
+  color:white;
+  font-size: medium;
+}
 
 /* Remove the "box shadow" effect around various boxes on the page. */
 .box {
@@ -100,6 +121,12 @@ color: #626b72;
 .hero .box {
   border: none;
 }
+
+.hompage .main .hero {
+  background:  ;
+}
+
+
 /* Change the colors of the "Search Your Data" box. */
 .homepage .module-search .module-content {
   border-style: solid;
@@ -152,4 +179,8 @@ body {
 /* The link texts in the footer. */
 .site-footer a {
   color: rgba(255, 255, 255, 0.6);
+}
+
+.hiddenRow {
+  padding: 0 !important;
 }
