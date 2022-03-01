@@ -4,14 +4,15 @@ import re
 import yaml
 import logging
 from datetime import datetime
-
+import os
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 log.addHandler(logging.StreamHandler())
 
+dirname = os.path.dirname(__file__)
 
-path = '/usr/lib/ckan/test_env/src/ckanext-klimakonform/ckanext/klimakonform/public/rekis_ascii_file_naming.yml' 
+path = os.path.join(dirname, 'public/rekis_ascii_file_naming.yml')
 names_yml = yaml.safe_load(open(path))
 
 
