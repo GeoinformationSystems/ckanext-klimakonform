@@ -1,5 +1,8 @@
 {% ckan_extends %}
 
+{% block header_site_search %}
+{% endblock %}
+
 {% block header_account_logged %} 
 	{% if c.userobj.sysadmin %}
 	<li>
@@ -53,5 +56,7 @@
 		</a>
 	</li>
 	{% endblock %} 
+
+	
 {% endblock %}
 
