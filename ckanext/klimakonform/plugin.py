@@ -10,12 +10,19 @@ import yaml
 from geopy.geocoders import Nominatim
 import logging
 
+from sqlalchemy import Column, DDL, event, ForeignKey, Index, types
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
+from model import Object
+
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 log.addHandler(logging.StreamHandler())
 
 config = tk.config
-
+Base = declarative_base(cls=Object)
 
 
 
