@@ -1,29 +1,25 @@
 # -*- coding: utf-8 -*-
+from re import I
 import ckan.plugins as plugins
-from ckanext.discovery.plugins.search_suggestions.interfaces import \
-    ISearchTermPreprocessor
 import ckantoolkit as tk
 from ckanext.spatial.plugin.__init__ import SpatialQuery
 import ckan.plugins.toolkit as toolkit
 from helpers import update_resources, set_of_time_periods, set_of_seasons, set_of_themes
 import yaml
 from geopy.geocoders import Nominatim
+from .database_model import SearchQuery
 import logging
+from ckan.model.meta import Session
 
-from sqlalchemy import Column, DDL, event, ForeignKey, Index, types
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
 
-from model import Object
+from ckanext.discovery.plugins.search_suggestions.interfaces import \
+    ISearchTermPreprocessor
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 log.addHandler(logging.StreamHandler())
 
 config = tk.config
-Base = declarative_base(cls=Object)
-
 
 
 geolocator = Nominatim(user_agent="http")
@@ -49,6 +45,8 @@ def get_unique_set_of_seasons(resources):
 def get_unique_set_of_themes(resources):
     themes = set_of_themes(resources)
     return themes
+
+
 
 class KlimakonformPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
@@ -93,36 +91,66 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
     
     #Spatial Query Implementation
 
+    def after_search(self, search_results, search_params):
+        #log.debug("After search params extras = {}".format(search_params['extras']))
+        
+        #if 'ext_bbox' in search_params['extras']:
+            #bbox = search_params['extras'][ext_bbox].split(',')
+            #q = search_params['q']
+         #   log.debug("Search Params after search {}".format(search_params))
+            # SearchQuery(search_params).store()
+
+        return search_results
+
+
     def before_search(self, search_params):
         '''
         This function geocodes every search-query and adds it as additional query-param
         before passing the parameter to the search interfaces
         '''
-
         #Todo: add caching of geocoded results
         context = SpatialQuery()       
+        #search_params['extras']['ext_bbox'] = '13.45605455338955,51.0236031531856,13.69775377213955,51.23045192160806'
+        
+
         
         if 'q' in search_params:
-            log.debug('Looking for geolocation from search query')
-            log.debug('org_search_params = {}'.format(search_params))
+            # Search for stored coordinates in database
+            db_query_results = SearchQuery(search_params).get_results_if_exists()
 
-            try:
-                query_geocoded = geolocator.geocode(search_params['q'])
+            if db_query_results is not None:
+                '''Entry found in database'''
+                search_params['extras']['ext_bbox'] = db_query_results
+                search_params['extras']['ext_prev_extent'] = db_query_results
+                search_params['q'] = u''
+                search_params_filtered = SpatialQuery.before_search(context, search_params)
+                
+                log.debug('Search_params_filtered_with_bbox : {}'.format(search_params))
+                return search_params_filtered
+            
+            else:
+                log.debug('Calling Nominatim API for search query')
+                try:
+                    query_geocoded = geolocator.geocode(search_params['q'])
 
-                if query_geocoded is not None:
-                    coords = '{0}+{1}'.format(query_geocoded.latitude, query_geocoded.longitude)
+                    if query_geocoded is not None:
+                        bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
+                        log.debug('Found following coordinates and appended it to query: {}'.format(bbox))
 
-                    bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
-                    log.debug('Found following coordinates and appended it to query: {}'.format(coords))
+                        search_params['extras']['ext_bbox'] = bbox
+                        search_params['extras']['ext_prev_extent'] = bbox
 
-                    search_params['extras']['ext_bbox'] = bbox
-                    search_params['extras']['ext_prev_extent'] = bbox
-                    search_params['q'] = u''
-                    search_params_filtered = SpatialQuery.before_search(context, search_params)
-                    log.debug('search_params_filtered_with_bbox : {}'.format(search_params))
-                    return search_params_filtered
-            except Exception as e: 
-                log.debug('Failed to find geolocation because {}'.format(e))
+                        #Store result into db
+                        SearchQuery(search_params).store()
+
+                        search_params['q'] = u''
+                        search_params_filtered = SpatialQuery.before_search(context, search_params)
+                        
+                        
+
+                        return search_params_filtered
+                except Exception as e: 
+                    log.debug('Failed to find geolocation because {}'.format(e))
         
         return search_params
     
