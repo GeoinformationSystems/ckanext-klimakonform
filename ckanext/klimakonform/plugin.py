@@ -9,7 +9,6 @@ import yaml
 from geopy.geocoders import Nominatim
 from .database_model import SearchQuery
 import logging
-from ckan.model.meta import Session
 
 
 from ckanext.discovery.plugins.search_suggestions.interfaces import \
@@ -91,66 +90,86 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
     
     #Spatial Query Implementation
 
-    def after_search(self, search_results, search_params):
-        #log.debug("After search params extras = {}".format(search_params['extras']))
-        
-        #if 'ext_bbox' in search_params['extras']:
-            #bbox = search_params['extras'][ext_bbox].split(',')
-            #q = search_params['q']
-         #   log.debug("Search Params after search {}".format(search_params))
-            # SearchQuery(search_params).store()
-
-        return search_results
-
-
     def before_search(self, search_params):
         '''
         This function geocodes every search-query and adds it as additional query-param
         before passing the parameter to the search interfaces
         '''
-        #Todo: add caching of geocoded results
-        context = SpatialQuery()       
-        #search_params['extras']['ext_bbox'] = '13.45605455338955,51.0236031531856,13.69775377213955,51.23045192160806'
-        
+        context = SpatialQuery()    
+        coords_in_filter_bbox = False 
 
+        # bbox = min Longitude , min Latitude , max Longitude , max Latitude 
+        #bbox for germany: 5.564941, 47.141223, 15.571542, 55.059744
+        bbox_filter = [5.564941, 47.141223, 15.571542, 55.059744]   
+  
         
         if 'q' in search_params:
-            # Search for stored coordinates in database
+            terms = search_params['q'].split(' ')
+
+            # Looping through query terms and if first match with base return stored coord values
             db_query_results = SearchQuery(search_params).get_results_if_exists()
 
+
             if db_query_results is not None:
-                '''Entry found in database'''
-                search_params['extras']['ext_bbox'] = db_query_results
-                search_params['extras']['ext_prev_extent'] = db_query_results
-                search_params['q'] = u''
-                search_params_filtered = SpatialQuery.before_search(context, search_params)
+                db_coords = db_query_results.split(',')
+
+                if  db_coords[0] >= bbox_filter[0] and \
+                    db_coords[1] >= bbox_filter[1] and \
+                    db_coords[2] <= bbox_filter[2] and \
+                    db_coords[3] <= bbox_filter[3]:
+                    coords_in_filter_bbox = True
                 
-                log.debug('Search_params_filtered_with_bbox : {}'.format(search_params))
-                return search_params_filtered
-            
+                if coords_in_filter_bbox:
+                    '''Entry found in database'''
+                    search_params['extras']['ext_bbox'] = db_query_results
+                    search_params['extras']['ext_prev_extent'] = db_query_results
+                    search_params['q'] = u''
+                    search_params_filtered = SpatialQuery.before_search(context, search_params)
+                    
+                    log.debug('Search_params_filtered_with_bbox : {}'.format(search_params))
+                    return search_params_filtered
+                else:
+                    log.debug('Found coordinates in Database. Location is not in filter bbox. \
+                             Turning off the spatial search')
+                    return search_params
             else:
-                log.debug('Calling Nominatim API for search query')
-                try:
-                    query_geocoded = geolocator.geocode(search_params['q'])
+                for term in terms:
+                    '''No entry found in DB, try geocoding search-query...'''
+                    log.debug('Calling Nominatim API for search query')
+                    log.debug('Following query {}'.format(term))
+                    try:
+                        query_geocoded = geolocator.geocode(term)
 
-                    if query_geocoded is not None:
-                        bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
-                        log.debug('Found following coordinates and appended it to query: {}'.format(bbox))
+                        if query_geocoded is not None:
+                            if  query_geocoded.longitude >= bbox_filter[0] and \
+                                query_geocoded.latitude >= bbox_filter[1] and \
+                                query_geocoded.longitude <= bbox_filter[2] and \
+                                query_geocoded.latitude <= bbox_filter[3]:
+                                coords_in_filter_bbox = True
 
-                        search_params['extras']['ext_bbox'] = bbox
-                        search_params['extras']['ext_prev_extent'] = bbox
+                            if coords_in_filter_bbox:
+                                bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
+                                log.debug('Found following coordinates and appended it to query: {}'.format(bbox))
 
-                        #Store result into db
-                        SearchQuery(search_params).store()
+                                search_params['extras']['ext_bbox'] = bbox
+                                search_params['extras']['ext_prev_extent'] = bbox
+                                search_params['q'] = term
 
-                        search_params['q'] = u''
-                        search_params_filtered = SpatialQuery.before_search(context, search_params)
-                        
-                        
+                                #Store result into db
+                                SearchQuery(search_params).store()
 
-                        return search_params_filtered
-                except Exception as e: 
-                    log.debug('Failed to find geolocation because {}'.format(e))
+                                search_params['q'] = u''
+                                search_params_filtered = SpatialQuery.before_search(context, search_params)
+                                
+                                return search_params_filtered
+                            else: 
+                                log.debug('Found coordinates by calling Nomiatim API. Location is not in filter bbox. \
+                                            Turning off the spatial search')
+                                pass
+                        else:
+                            pass
+                    except Exception as e: 
+                        log.debug('Failed to find geolocation because {}'.format(e))
         
         return search_params
     

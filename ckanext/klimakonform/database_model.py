@@ -119,11 +119,11 @@ class SearchQuery(object):
         '''
         Store the query in the database.
         '''
-        term = self.query_string.split(' ')[0]
+        log.debug("Search query to store: {}".format(self.query_string))
         bbox = self.query['extras']['ext_bbox'] 
         log.debug('QS: {}'.format(self.query))
-        log.debug('Saving coords for following query: {}'.format(term))
-        GeocodingResults.get_or_create(term=term, coordinates=bbox)
+        log.debug('Saving coords for following query: {}'.format(self.query_string))
+        GeocodingResults.get_or_create(term=self.query_string, coordinates=bbox)
         Session.commit()
 
         """
@@ -132,11 +132,13 @@ class SearchQuery(object):
         Session.commit()
         """
     def get_results_if_exists(self):
-        term = self.query_string.split(' ')[0]
-        results = GeocodingResults.select_if_exists(term=term)
-        if results:
-            log.debug('Query Results from db: {}'.format(results))
-            return results    
+        terms = self.query_string.split(' ')
+        
+        for term in terms:
+            results = GeocodingResults.select_if_exists(term=term)
+            if results:
+                log.debug('Query Results from db: {}'.format(results))
+                return results    
         return 
 
 def create_tables():
