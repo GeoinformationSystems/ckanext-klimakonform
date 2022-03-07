@@ -34,9 +34,13 @@ To install ckanext-klimakonform:
 	python setup.py develop
 	pip install -r requirements.txt
 
-3. Add ``klimakonform`` to the end of ``ckan.plugins`` setting in your CKAN config file (by default the config file is located at ``/etc/ckan/default/ckan.ini``).
+3. Then create the necessary database tables for spatial search:
+	. /usr/lib/ckan/default/bin/activate
+	paster --plugin=ckanext-klimakonform klimakonform init -c /etc/ckan/default/ckan.ini
 
-4. Restart CKAN. For example if you've deployed CKAN with Supervisor on Ubuntu::
+4. Add ``klimakonform`` to the end of ``ckan.plugins`` setting in your CKAN config file (by default the config file is located at ``/etc/ckan/default/ckan.ini``).
+
+5. Restart CKAN. For example if you've deployed CKAN with Supervisor on Ubuntu::
 
 	sudo service supervisor restart
 
