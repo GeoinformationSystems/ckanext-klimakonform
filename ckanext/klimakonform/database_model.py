@@ -113,6 +113,12 @@ class SearchQuery(object):
     def _normalize_query(self, q):
         q = q.lower()
         q = q.replace('ß', 'ss')
+        q = q.replace('ö', 'oe')
+        q = q.replace('Ö', 'oe')
+        q = q.replace('Ä', 'ae')
+        q = q.replace('ä', 'ae')
+        q = q.replace('Ü', 'ue')
+        q = q.replace('ü', 'ue')
         return q
 
     def store(self):
