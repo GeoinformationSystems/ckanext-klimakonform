@@ -34,7 +34,7 @@ To install ckanext-klimakonform:
 	python setup.py develop
 	pip install -r requirements.txt
 
-3. Then create the necessary database tables for spatial search:
+3. Then create the necessary database tables for spatial search::
 	. /usr/lib/ckan/default/bin/activate
 	paster --plugin=ckanext-klimakonform klimakonform init -c /etc/ckan/default/ckan.ini
 
