@@ -44,6 +44,7 @@ color: #626b72;
   border-style: solid;
   border-color: #a0b84a; 
   background-color: white;
+  background: white;
   color: black;
 }
 /* The "navigation pills" in the masthead (the links to Datasets,
@@ -72,15 +73,24 @@ color: #626b72;
   box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
 }
 
+.account-masthead{
+  background: white;
+}
 
 /* ===========================================
    The content in the middle of the front page
    =========================================== */
 @media (min-width: 768px) {
   .hero {
-    background: #FFFFFF;
+    background-image: url("https://rekis.hydro.tu-dresden.de/wp-content/uploads/2020/12/rekis_header_01b_expert.png");
+    background-size: cover;
+    background-position:center;
 }
   }
+
+.hero{
+  min-height:500px;
+}
 .homepage {
   background-color: white;
 }
@@ -112,6 +122,7 @@ color: #626b72;
 }
 
 
+
 #content > div.toolbar > ol > li > a {
   color:white;
   font-size: medium;
@@ -127,25 +138,21 @@ color: #626b72;
   border: none;
 }
 
-.hompage .main .hero {
-  background:  ;
-}
-
 
 /* Change the colors of the "Search Your Data" box. */
 .homepage .module-search .module-content {
   border-style: solid;
-  border-color: #a0b84a; 
+  border-color: grey; 
   border-width: thin;
-  background-color: #a0b84a;
   color: white;
+  
 }
 /* Change the background color of the "Popular Tags" box. */
 .homepage .module-search .tags {
   border-style: solid;
-  border-color: #a0b84a; 
-  border-width: medium;
-  background-color: white;
+  border-color: grey; 
+  border-width: thin;
+  background-color: #e6e1dc;
   color: #626b72;
 }
 .homepage .module-search .tags .tag:hover{

@@ -136,7 +136,6 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
                 for term in terms:
                     '''No entry found in DB, try geocoding search-query...'''
                     log.debug('Calling Nominatim API for search query')
-                    log.debug('Following query {}'.format(term))
                     try:
                         query_geocoded = geolocator.geocode(term)
 
