@@ -76,6 +76,11 @@ color: #626b72;
 /* ===========================================
    The content in the middle of the front page
    =========================================== */
+@media (min-width: 768px) {
+  .hero {
+    background: #FFFFFF;
+}
+  }
 .homepage {
   background-color: white;
 }

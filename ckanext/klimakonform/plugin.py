@@ -109,15 +109,15 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
             # Looping through query terms and if first match with base return stored coord values
             db_query_results = SearchQuery(search_params).get_results_if_exists()
 
-
             if db_query_results is not None:
                 db_coords = db_query_results.split(',')
+                db_coords_float = [float(item)for item in db_coords]
 
-                if  db_coords[0] >= bbox_filter[0] and \
-                    db_coords[1] >= bbox_filter[1] and \
-                    db_coords[2] <= bbox_filter[2] and \
-                    db_coords[3] <= bbox_filter[3]:
-                    coords_in_filter_bbox = True
+                if  db_coords_float[0] >= bbox_filter[0] and \
+                    db_coords_float[1] >= bbox_filter[1] and \
+                    db_coords_float[2] <= bbox_filter[2] and \
+                    db_coords_float[3] <= bbox_filter[3]:
+                    coords_in_filter_bbox = True                    
                 
                 if coords_in_filter_bbox:
                     '''Entry found in database'''
