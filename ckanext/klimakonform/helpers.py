@@ -57,7 +57,7 @@ def format_year_with_reference_period(list_periods):
 
 def update_start_end_period_param(resource_dict):
     #Todo: make this function cleaner
-    time_period = re.findall("[0-9]{4}.[0-9]{4}", resource_dict['cache_url'])
+    time_period = re.findall("[0-9]{4}[^\/]+[0-9]{4}", resource_dict['cache_url'])
     results = ['', '']
     only_one_year = None
     if not time_period:
