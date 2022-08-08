@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from doctest import ELLIPSIS_MARKER
 import ckan.plugins as plugins
 import ckantoolkit as tk
+from ckan import model
 from ckanext.spatial.plugin.__init__ import SpatialQuery
 import ckan.plugins.toolkit as toolkit
-from helpers import update_resources, set_of_time_periods, set_of_seasons, set_of_themes
+from helpers import update_resources, set_of_time_periods, set_of_seasons, set_of_themes, add_gemet_filter
 import yaml
 from geopy.geocoders import Nominatim
 from .database_model import SearchQuery
@@ -44,7 +46,44 @@ def get_unique_set_of_themes(resources):
     themes = set_of_themes(resources)
     return themes
 
+def gemet_filter(search_params):
+    return add_gemet_filter(search_params)
 
+def _is_user_text_search(context, query):
+    '''
+    Decide if a search query is a user-initiated text search.
+    '''
+    # See https://github.com/ckan/ckanext-searchhistory/issues/1#issue-32079108
+    try:
+        # log.debug('context-controller: {0}, context-action: {1}, query: {2}'.format(context.controller, context.action, query))
+
+        if (
+            context.controller in ('dataset', 'home')
+            and context.action in ('search','index')
+            and query in (':', '*:*', '')
+            #or context.action != 'search'
+            #or ((query or '').strip() in (':', '*:*'))
+        ):
+            return False
+    except TypeError:
+        # Web context not ready. Happens, for example, in paster commands.
+        return False
+    return True
+
+def test_tmpl(list_of_tags):
+    tags = [tag['name'] for tag in list_of_tags]
+   
+    if len(tags) > 1:
+        fq = 'tags:({})'.format(' OR '.join(tags))
+    else:
+        fq = 'tags:{}'.format(tags[0])
+
+    packges_t = toolkit.get_action('package_search')(
+            data_dict={'fq': fq})  
+
+    top_five_results = packges_t['results'][:5]
+
+    return [r['title'] for r in top_five_results]
 
 class KlimakonformPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
@@ -72,7 +111,9 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
                 'update_resource_info': update_resource_info,
                 'get_unique_set_of_time_periods': get_unique_set_of_time_periods,
                 'get_unique_set_of_seasons': get_unique_set_of_seasons,
-                'get_unique_set_of_themes': get_unique_set_of_themes}
+                'get_unique_set_of_themes': get_unique_set_of_themes,
+                'gemet_filter' : gemet_filter,
+                'test_tmpl': test_tmpl}
     
     # IRoutes
     
@@ -100,82 +141,96 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
         # bbox = min Longitude , min Latitude , max Longitude , max Latitude 
         #bbox for germany: 5.564941, 47.141223, 15.571542, 55.059744
         bbox_filter = [5.564941, 47.141223, 15.571542, 55.059744]   
-  
-        if not 'fq' in search_params:
-            """API search - do not enable spatial search to keep control"""
-            log.debug("No user search - disabling spatial search filter")
-            return search_params
-        else:
-            log.debug("User search - enabling spatial search filter")
-            if 'q' in search_params:
-                terms = search_params['q'].split(' ')
+         
+        if 'q' in search_params:
+            if not _is_user_text_search(toolkit.c, search_params['q']):
+                """API search - do not enable spatial search to keep control"""
+                log.debug("No user search - disabling spatial search filter")
+                return search_params
+            else:
+                log.debug("User search - enabling spatial search filter")
+                if 'q' in search_params:
+                    terms = search_params['q'].split(' ')
 
-                # Looping through query terms and if first match with base return stored coord values
-                db_query_results = SearchQuery(search_params).get_results_if_exists()
+                    # Looping through query terms and if first match with base return stored coord values
+                    db_query_results = SearchQuery(search_params).get_results_if_exists()
 
-                if db_query_results is not None:
-                    db_coords = db_query_results.split(',')
-                    db_coords_float = [float(item)for item in db_coords]
+                    if db_query_results is not None:
+                        db_coords = db_query_results.split(',')
+                        db_coords_float = [float(item)for item in db_coords]
 
-                    if  db_coords_float[0] >= bbox_filter[0] and \
-                        db_coords_float[1] >= bbox_filter[1] and \
-                        db_coords_float[2] <= bbox_filter[2] and \
-                        db_coords_float[3] <= bbox_filter[3]:
-                        coords_in_filter_bbox = True                    
-                    
-                    if coords_in_filter_bbox:
-                        '''Entry found in database'''
-                        search_params['extras']['ext_bbox'] = db_query_results
-                        search_params['extras']['ext_prev_extent'] = db_query_results
-                        search_params['q'] = u''
-                        search_params_filtered = SpatialQuery.before_search(context, search_params)
+                        if  db_coords_float[0] >= bbox_filter[0] and \
+                            db_coords_float[1] >= bbox_filter[1] and \
+                            db_coords_float[2] <= bbox_filter[2] and \
+                            db_coords_float[3] <= bbox_filter[3]:
+                            coords_in_filter_bbox = True                    
                         
-                        log.debug('Search_params_filtered_with_bbox : {}'.format(search_params))
-                        return search_params_filtered
+                        if coords_in_filter_bbox:
+                            '''Entry found in database'''
+                            search_params['extras']['ext_bbox'] = db_query_results
+                            search_params['extras']['ext_prev_extent'] = db_query_results
+                            search_params['q'] = u''
+                            search_params_filtered = SpatialQuery.before_search(context, search_params)
+                            
+                            search_params_with_gemet = gemet_filter(search_params_filtered)
+                            log.debug('Search_params_filtered_with_bbox : {}'.format(search_params_with_gemet))
+                            return search_params_with_gemet
+                        else:
+                            log.debug('Found coordinates in Database. Location is not in filter bbox. \
+                                    Turning off the spatial search')
+                            search_params_with_gemet = gemet_filter(search_params)
+                            return search_params_with_gemet
                     else:
-                        log.debug('Found coordinates in Database. Location is not in filter bbox. \
-                                Turning off the spatial search')
-                        return search_params
-                else:
-                    for term in terms:
-                        '''No entry found in DB, try geocoding search-query...'''
-                        log.debug('Calling Nominatim API for search query')
-                        try:
-                            query_geocoded = geolocator.geocode(term)
+                        for term in terms:
+                            '''No entry found in DB, try geocoding search-query...'''
+                            log.debug('Calling Nominatim API for search query')
+                            try:
+                                query_geocoded = geolocator.geocode(term)
 
-                            if query_geocoded is not None:
-                                if  query_geocoded.longitude >= bbox_filter[0] and \
-                                    query_geocoded.latitude >= bbox_filter[1] and \
-                                    query_geocoded.longitude <= bbox_filter[2] and \
-                                    query_geocoded.latitude <= bbox_filter[3]:
-                                    coords_in_filter_bbox = True
+                                if query_geocoded is not None:
+                                    if  query_geocoded.longitude >= bbox_filter[0] and \
+                                        query_geocoded.latitude >= bbox_filter[1] and \
+                                        query_geocoded.longitude <= bbox_filter[2] and \
+                                        query_geocoded.latitude <= bbox_filter[3]:
+                                        coords_in_filter_bbox = True
 
-                                if coords_in_filter_bbox:
-                                    bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
-                                    log.debug('Found following coordinates and appended it to query: {}'.format(bbox))
+                                    if coords_in_filter_bbox:
+                                        bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
+                                        log.debug('Found following coordinates and appended it to query: {}'.format(bbox))
 
-                                    search_params['extras']['ext_bbox'] = bbox
-                                    search_params['extras']['ext_prev_extent'] = bbox
-                                    search_params['q'] = term
+                                        search_params['extras']['ext_bbox'] = bbox
+                                        search_params['extras']['ext_prev_extent'] = bbox
+                                        search_params['q'] = term
 
-                                    #Store result into db
-                                    SearchQuery(search_params).store()
+                                        #Store result into db
+                                        SearchQuery(search_params).store()
 
-                                    search_params['q'] = u''
-                                    search_params_filtered = SpatialQuery.before_search(context, search_params)
-                                    
-                                    return search_params_filtered
-                                else: 
-                                    log.debug('Found coordinates by calling Nomiatim API. Location is not in filter bbox. \
-                                                Turning off the spatial search')
-                                    pass
-                            else:
-                                pass
-                        except Exception as e: 
-                            log.debug('Failed to find geolocation because {}'.format(e))
+                                        search_params['q'] = u''
+                                        search_params_filtered = SpatialQuery.before_search(context, search_params)
+                                        search_params_with_gemet = gemet_filter(search_params_filtered)
+
+                                        log.debug('Search_params_filtered_with_bbox : {}'.format(search_params_with_gemet))         
+
+                                        return search_params_with_gemet
+                                    else: 
+                                        log.debug('Found coordinates by calling Nomiatim API. Location is not in filter bbox. \
+                                                    Turning off the spatial search')
+                                        pass
+                                else:
+                                    """ Turn on gemet filter, if no spatial filter is used"""
+                                    log.debug("Turning on gemet query enrichment")
+                                    return gemet_filter(search_params)
+                            except Exception as e: 
+                                log.debug('Failed to find geolocation because {}'.format(e))
             
-        return search_params
-        
+
+            if  _is_user_text_search(toolkit.c, search_params['q']):
+                search_params_with_gemet = gemet_filter(search_params)
+                log.debug('User search final')
+                return search_params_with_gemet
+        else:
+            log.debug('No User search final')
+            return search_params
 
     # ISearchTermPreprocessor
 

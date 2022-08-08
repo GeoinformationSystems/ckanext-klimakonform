@@ -56,5 +56,15 @@
 {% if dataset_extent %}
 {% snippet "spatial/snippets/dataset_map.html", extent=dataset_extent %}
 {% endif %}
-{% endblock %}
 
+{% set tags = pkg.tags %}
+<section>
+  <h3> Similar datasets</h3>
+  <div>
+    Current Tags:
+    {{h.test_tmpl(tags)}}
+  </div>
+</section>
+
+
+{% endblock %}

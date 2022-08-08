@@ -5,6 +5,8 @@ import yaml
 import logging
 from datetime import datetime
 import os
+import requests
+import json
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
@@ -173,3 +175,81 @@ def set_of_themes(list_of_resource_dicts):
     sorted_unique_list_of_themes_dicts = sorted(unique_list_of_themes_dicts, key=lambda d: d['order']) 
     set_of_themes = [d['name'] for d in sorted_unique_list_of_themes_dicts]
     return set_of_themes
+
+def get_gemet_concept_from_keyword(term):
+    url = 'http://www.eionet.europa.eu/gemet/getConceptsMatchingKeyword?keyword={}' \
+        '&search_mode=4' \
+        '&thesaurus_uri=http://www.eionet.europa.eu/gemet/concept/' \
+        '&language=de'.format(term)
+
+    r = requests.get(url).json()
+    if r:
+        log.debug("found something")
+        log.debug(r[0]['uri'])
+        return r[0]['uri']
+
+def get_gemet_concept_from_uri(uri):
+    # http://www.eionet.europa.eu/gemet/getConcept?concept_uri=http://inspire.ec.europa.eu/theme/ps&language=de
+    url = 'http://www.eionet.europa.eu/gemet/getConcept?concept_uri={}&language=de'.format(uri)
+
+    r = requests.get(url).json()
+    if r:
+        log.debug("found something")
+        log.debug(r['uri'])
+        return r['preferredLabel']['string']
+    return
+
+def get_concept_relatives(uri):
+    url = 'http://www.eionet.europa.eu/gemet/getAllConceptRelatives?concept_uri={}'.format(uri)
+    
+    r = requests.get(url).json()
+    list_of_relatives = []
+    if r:
+        for item in r:
+            target_uri = item['target']
+            target_name = get_gemet_concept_from_uri(target_uri)
+            list_of_relatives.append(target_name)
+            
+        log.debug('relatives: {}'.format(list_of_relatives))
+
+def add_gemet_filter(search_params):
+    #   if (search_params['q'] != '*:*') and (search_params['q'] != u''): # empty search
+    filtered_search_params = search_params
+
+    tags = '(Geobasisdaten OR Niederschlag)'
+
+    terms = search_params['q'].split(' ')
+
+    # terms = search_params.split(',')
+    related_concepts = []
+    for term in terms:
+        """
+        uri = get_gemet_concept_from_keyword(term)
+        log.debug(uri)
+        if uri is not None:
+            concept_relatives = get_concept_relatives(uri)
+            log.debug('relatives : {}'.format(concept_relatives))
+        """
+
+    log.debug("original prams = {}".format(search_params))
+
+    # r = requests.get(url)
+
+
+    """
+    if 'fq' in filtered_search_params:
+    #TODO: only append new tags if ['fq'] tags already there
+        filtered_search_params['fq'] = 'tags:{}'.format(tags)
+        return filtered_search_params
+    else:
+        ##TODO
+        # Add tag appending here
+        
+        ##
+        return search_params
+    """
+    return search_params
+
+
+def test_tmpl():
+    return "hello"
