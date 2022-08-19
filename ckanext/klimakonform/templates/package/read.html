@@ -58,13 +58,7 @@
 {% endif %}
 
 {% set tags = pkg.tags %}
-<section>
-  <h3> Similar datasets</h3>
-  <div>
-    Current Tags:
-    {{h.test_tmpl(tags)}}
-  </div>
-</section>
+{% snippet 'snippets/similar_packages.html', package=pkg, tags=tags %}
 
 
 {% endblock %}

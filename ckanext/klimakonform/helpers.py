@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# encoding: utf-8
 
 import re
 import yaml
@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 import requests
 import json
+import rdflib
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
@@ -187,6 +188,8 @@ def get_gemet_concept_from_keyword(term):
         log.debug("found something")
         log.debug(r[0]['uri'])
         return r[0]['uri']
+    else:
+        return
 
 def get_gemet_concept_from_uri(uri):
     # http://www.eionet.europa.eu/gemet/getConcept?concept_uri=http://inspire.ec.europa.eu/theme/ps&language=de
@@ -196,7 +199,10 @@ def get_gemet_concept_from_uri(uri):
     if r:
         log.debug("found something")
         log.debug(r['uri'])
-        return r['preferredLabel']['string']
+        if 'preferredLabel' in r:
+            return r['preferredLabel']['string']
+        else:
+            return
     return
 
 def get_concept_relatives(uri):
@@ -211,6 +217,7 @@ def get_concept_relatives(uri):
             list_of_relatives.append(target_name)
             
         log.debug('relatives: {}'.format(list_of_relatives))
+        return list_of_relatives
 
 def add_gemet_filter(search_params):
     #   if (search_params['q'] != '*:*') and (search_params['q'] != u''): # empty search
@@ -231,7 +238,7 @@ def add_gemet_filter(search_params):
             log.debug('relatives : {}'.format(concept_relatives))
         """
 
-    log.debug("original prams = {}".format(search_params))
+    # log.debug("original prams = {}".format(search_params))
 
     # r = requests.get(url)
 
@@ -251,5 +258,65 @@ def add_gemet_filter(search_params):
     return search_params
 
 
-def test_tmpl():
-    return "hello"
+def get_concept_by_term(rdf, keyword):
+    q = '''
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT ?uri 
+        WHERE {
+          ?uri skos:prefLabel "%(keyword)s"@de .
+          ?uri skos:prefLabel ?label
+          FILTER(lang(?label)="de")
+        }
+
+    '''%{'keyword':keyword}
+    return [row[0].n3() for row in rdf.query(q)]
+
+def get_concept_label_by_uri(rdf, concept_uri):
+    q = '''
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT ?clabel
+        WHERE {
+        <%(concept_uri)s> skos:prefLabel ?clabel .
+          FILTER(lang(?clabel)="de")
+        } LIMIT 10
+                
+
+        '''%{'concept_uri':concept_uri}
+    clabel =  rdf.query(q)
+    if clabel:
+        return [row[0].n3()[1:-4] for row in rdf.query(q)][0]
+    # else:
+    #    log.debug("No german label found for concept: {}".format(concept_uri))
+         
+
+def get_broader_and_narrower_concepts(rdf, concept_uri):
+    q = '''
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+    SELECT ?a 
+    WHERE {
+      {<%(concept_uri)s> skos:broader ?a}
+        UNION 
+      {<%(concept_uri)s> skos:narrower ?a}
+    } LIMIT 10
+
+    '''%{'concept_uri':concept_uri}
+    results = rdf.query(q)
+    if results:
+        return [row[0].n3()[1:-1] for row in rdf.query(q)]
+    else:
+        return 'Concept "<{}>" has no related concepts'.format(concept_uri)
+
+def get_related_concepts_for_keyword(rdf, keyword):
+    """ Gets concept URI for entered keyword and then searches for related concepts"""
+    term = get_concept_by_term(rdf, keyword.title().strip())
+    if term:
+        q = term[0][1:-1]
+        related_concepts = get_broader_and_narrower_concepts(rdf, q)
+        return [get_concept_label_by_uri(rdf, c) for c in related_concepts]
+    # else:
+    #    log.debug('No matching concept found for keyword: "{}"'.format(keyword))
+    
+

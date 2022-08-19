@@ -1,15 +1,21 @@
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+
+from cgi import test
 from doctest import ELLIPSIS_MARKER
+from re import search
 import ckan.plugins as plugins
 import ckantoolkit as tk
 from ckan import model
 from ckanext.spatial.plugin.__init__ import SpatialQuery
 import ckan.plugins.toolkit as toolkit
-from helpers import update_resources, set_of_time_periods, set_of_seasons, set_of_themes, add_gemet_filter
+from helpers import update_resources, set_of_time_periods, set_of_seasons, \
+        set_of_themes, add_gemet_filter, get_gemet_concept_from_keyword, get_concept_relatives, \
+        get_related_concepts_for_keyword
 import yaml
 from geopy.geocoders import Nominatim
 from .database_model import SearchQuery
 import logging
+import rdflib
 
 
 from ckanext.discovery.plugins.search_suggestions.interfaces import \
@@ -20,6 +26,8 @@ log.setLevel(logging.DEBUG)
 log.addHandler(logging.StreamHandler())
 
 config = tk.config
+
+gemet_rdf = './public/gemet_mod.rdf'
 
 
 geolocator = Nominatim(user_agent="http")
@@ -70,29 +78,72 @@ def _is_user_text_search(context, query):
         return False
     return True
 
-def test_tmpl(list_of_tags):
+def get_related_keywords(list_of_tags):
     tags = [tag['name'] for tag in list_of_tags]
-   
-    if len(tags) > 1:
-        fq = 'tags:({})'.format(' OR '.join(tags))
-    else:
-        fq = 'tags:{}'.format(tags[0])
 
+    gemet_keywords_uri = [get_related_concepts_for_keyword(rdf, tag) for tag in tags]
+
+    ### Make a flat list containing unique keywords:
+    ###
+    filtered_list = list(filter(None, gemet_keywords_uri))
+    flat_list_with_relatives = [item for sublist in filtered_list for item in sublist]
+    unique_list_with_relatives = list(set(flat_list_with_relatives))
+
+    # Remove None values
+    unique_without_none = list(filter(None, unique_list_with_relatives))
+    # Make parantheses around every keyword because SOLR needs this 
+    #TODO: change this to f-strings when using Python 3.X
+    extended_keyword_list = [u'({})'.format(i) for i in unique_without_none]
+  
+    # Create query from extended list of keywords and search for ckan-packages including these keywords
+    if len(extended_keyword_list) > 1:
+        #fq = u'tags:(Globalstrahlung OR {})'.format(' OR '.join(unique_without_none))
+        fq= u'tags:({})'.format(' OR '.join(extended_keyword_list))
+    elif len(extended_keyword_list) == 1:
+        fq = u'tags:{}'.format(extended_keyword_list[0])
+    else:
+        # No GEMET keywords entered
+        return [[], []]
+
+    # Search for packages with fq
     packges_t = toolkit.get_action('package_search')(
             data_dict={'fq': fq})  
-
+    # Expose top five results
     top_five_results = packges_t['results'][:5]
 
-    return [r['title'] for r in top_five_results]
+    # Construct a keyword dictionary for displaying as formated tags in Frontend
+    list_of_tag_dicts = []
+    for k in unique_without_none:
+        tag_dict = {u'vocabulary_id': None, 
+                u'state': u'active', 
+                u'display_name': k,  #  u'Bodentrockenheit', 
+                u'id': None, # u'e3e0f9e7-1e0b-4400-91ed-8e9a1d031f06'
+                u'name': k } # u'Bodentrockenheit'
+        list_of_tag_dicts.append(tag_dict)
+
+
+    return [list_of_tag_dicts, top_five_results]
+
 
 class KlimakonformPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IConfigurable)
     plugins.implements(plugins.IRoutes)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(ISearchTermPreprocessor)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(SpatialQuery)
 
+    # IConfigurable
+    def configure(self, config):
+        log.debug("Initializing RDF-schema of GEMET vocab")
+        rdf_file = '/usr/lib/ckan/test_env/src/ckanext-klimakonform/ckanext/klimakonform/public/gemet_mod.rdf'
+        g = rdflib.Graph()
+        skos = rdflib.Namespace('http://www.w3.org/2004/02/skos/core#')
+        global rdf
+        rdf = g.parse(rdf_file, namespace=skos)
+        return 
+    
     # IConfigurer
 
     def update_config(self, config_):
@@ -112,8 +163,7 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
                 'get_unique_set_of_time_periods': get_unique_set_of_time_periods,
                 'get_unique_set_of_seasons': get_unique_set_of_seasons,
                 'get_unique_set_of_themes': get_unique_set_of_themes,
-                'gemet_filter' : gemet_filter,
-                'test_tmpl': test_tmpl}
+                'get_related_keywords': get_related_keywords}
     
     # IRoutes
     
@@ -171,15 +221,16 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
                             search_params['extras']['ext_prev_extent'] = db_query_results
                             search_params['q'] = u''
                             search_params_filtered = SpatialQuery.before_search(context, search_params)
-                            
-                            search_params_with_gemet = gemet_filter(search_params_filtered)
-                            log.debug('Search_params_filtered_with_bbox : {}'.format(search_params_with_gemet))
-                            return search_params_with_gemet
+                            return search_params_filtered
+                            #search_params_with_gemet = gemet_filter(search_params_filtered)
+                            #log.debug('Search_params_filtered_with_bbox : {}'.format(search_params_with_gemet))
+                            #return search_params_with_gemet
                         else:
                             log.debug('Found coordinates in Database. Location is not in filter bbox. \
                                     Turning off the spatial search')
-                            search_params_with_gemet = gemet_filter(search_params)
-                            return search_params_with_gemet
+                            #search_params_with_gemet = gemet_filter(search_params)
+                            #return search_params_with_gemet
+                            return search_params
                     else:
                         for term in terms:
                             '''No entry found in DB, try geocoding search-query...'''
@@ -207,27 +258,29 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
 
                                         search_params['q'] = u''
                                         search_params_filtered = SpatialQuery.before_search(context, search_params)
-                                        search_params_with_gemet = gemet_filter(search_params_filtered)
+                                        #search_params_with_gemet = gemet_filter(search_params_filtered)
 
                                         log.debug('Search_params_filtered_with_bbox : {}'.format(search_params_with_gemet))         
-
-                                        return search_params_with_gemet
+                                        return search_params_filtered
+                                        #return search_params_with_gemet
                                     else: 
                                         log.debug('Found coordinates by calling Nomiatim API. Location is not in filter bbox. \
                                                     Turning off the spatial search')
                                         pass
                                 else:
                                     """ Turn on gemet filter, if no spatial filter is used"""
-                                    log.debug("Turning on gemet query enrichment")
-                                    return gemet_filter(search_params)
+                                    #log.debug("Turning on gemet query enrichment")
+                                    #return gemet_filter(search_params)
+                                    return search_params
                             except Exception as e: 
                                 log.debug('Failed to find geolocation because {}'.format(e))
             
 
             if  _is_user_text_search(toolkit.c, search_params['q']):
-                search_params_with_gemet = gemet_filter(search_params)
-                log.debug('User search final')
-                return search_params_with_gemet
+                #search_params_with_gemet = gemet_filter(search_params)
+                #log.debug('User search final')
+                #return search_params_with_gemet
+                return search_params
         else:
             log.debug('No User search final')
             return search_params
