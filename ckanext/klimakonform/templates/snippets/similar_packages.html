@@ -4,13 +4,13 @@
 
 {% if keywords%}
     <section>
-        <h3> Änhliche Tags:</h3>
+        <h3> Similar tags:</h3>
             <div>    
             {% snippet 'snippets/tag_list.html', tags=keywords, _class='tag-list custom' %}  
             </div>
     </section>
     <section>
-        <h3> Datensätze mit verwandten Tags:</h3>
+        <h3> Datasets with similar tags:</h3>
         <div>
         <ul class="{{ list_class or 'dataset-list list-unstyled' }}">
             {% if related_packages %}

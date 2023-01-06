@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../../../../../etc/ckan/test_env"
+		},
+		{
+			"path": "../../../../.."
+		},
+		{
+			"path": "../../../../../../local/lib/python2.7/site-packages/dominate"
+		}
+	],
+	"settings": {}
+}
