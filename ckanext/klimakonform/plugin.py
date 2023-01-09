@@ -29,7 +29,6 @@ config = tk.config
 
 gemet_rdf = './public/gemet_mod.rdf'
 
-
 geolocator = Nominatim(user_agent="http")
 
 def load_rekis_file_yaml_to_dict():

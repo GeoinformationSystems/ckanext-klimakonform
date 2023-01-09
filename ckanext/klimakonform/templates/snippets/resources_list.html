@@ -16,7 +16,7 @@
         {% if resources %}
           {% block resource_list_inner %}
           {% set org = h.get_organization(pkg.organization.id) %}
-          {% if 'Rekis' in org['display_name']%}
+          {% if 'Rekis' in org['display_name'] and 'CMIP' in resources[0]['name'] %}
             
             <table class="table table-striped table-bordered table-condensed">
               <thead>
@@ -37,11 +37,11 @@
                     <td>{{resource['name']}}</td>
                   {% endif %}
 
-                  {% if 'r26' in resource['name']%}
-                    <td>RCP 2.6</td>
-                  {% elif 'r45' in resource['name']%}
+                  {% if ('r26'or'rcp26') in resource['name'] %}
+                    <td>RCP 2.6 </td>
+                  {% elif ('r45'or'rcp45') in resource['name']%}
                     <td>RCP 4.5</td>
-                  {% elif 'r85' in resource['name']%}
+                  {% elif ('r85'or'rcp85') in resource['name']%}
                     <td>RCP 8.5</td>
                   {% else %}
                     <td></td>
