@@ -1,0 +1,26 @@
+{% set related_keywords_and_packages = h.get_related_keywords(tags) %}
+{% set keywords = related_keywords_and_packages[0] %}
+{% set related_packages = related_keywords_and_packages[1] %}
+
+{% if keywords%}
+    <section>
+        <h3> Similar tags:</h3>
+            <div>    
+            {% snippet 'snippets/tag_list.html', tags=keywords, _class='tag-list custom' %}  
+            </div>
+    </section>
+    <section>
+        <h3> Datasets with similar tags:</h3>
+        <div>
+        <ul class="{{ list_class or 'dataset-list list-unstyled' }}">
+            {% if related_packages %}
+                {% for package in related_packages %}
+                {% snippet 'snippets/klimakonform_package_item.html', package=package, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
+                {% endfor %}
+            {% else %}
+                <h5> Keine Datensätze mit ähnlichen Tags</h5>
+            {% endif %}
+        </ul>
+        </div>
+    </section>
+{% endif %}

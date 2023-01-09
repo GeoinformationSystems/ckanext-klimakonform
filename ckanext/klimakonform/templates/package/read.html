@@ -56,5 +56,9 @@
 {% if dataset_extent %}
 {% snippet "spatial/snippets/dataset_map.html", extent=dataset_extent %}
 {% endif %}
-{% endblock %}
 
+{% set tags = pkg.tags %}
+{% snippet 'snippets/similar_packages.html', package=pkg, tags=tags %}
+
+
+{% endblock %}

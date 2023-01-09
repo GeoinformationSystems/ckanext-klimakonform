@@ -196,3 +196,11 @@ body {
 .hiddenRow {
   padding: 0 !important;
 }
+
+.tag-list .custom {
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
+  list-style: none;
+  padding: 10px 10px 5px 10px;
+}
