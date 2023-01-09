@@ -101,13 +101,13 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
         #bbox for germany: 5.564941, 47.141223, 15.571542, 55.059744
         bbox_filter = [5.564941, 47.141223, 15.571542, 55.059744]   
 
-        """
-        if not 'fq' in search_params:
-            """API search - do not enable spatial search to keep control"""
-            log.debug("No user search - disabling spatial search filter")
-            return search_params
-        else:
-        """
+        
+        # if not 'fq' in search_params:
+        #     """API search - do not enable spatial search to keep control"""
+        #     log.debug("No user search - disabling spatial search filter")
+        #     return search_params
+        # else:
+        
         log.debug("User search - enabling spatial search filter")
         if 'q' in search_params:
             terms = search_params['q'].split(' ')
