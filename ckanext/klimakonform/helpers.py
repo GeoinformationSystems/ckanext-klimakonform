@@ -23,8 +23,10 @@ def update_season_param(resource_dict):
     for key in names_yml['seasons']:
         if re.search(key, resource_dict['cache_url'].lower()):
             resource_dict['season'] = names_yml['seasons'][key]
+            return
+    # If no season found, initialize with empty dict to avoid None in templates
     if 'season' not in resource_dict:
-        resource_dict['season'] = None
+        resource_dict['season'] = {}
 
 
 def format_year_with_reference_period(list_periods):
@@ -60,6 +62,14 @@ def format_year_with_reference_period(list_periods):
 
 def update_start_end_period_param(resource_dict):
     #Todo: make this function cleaner
+    # Initialize fields with empty strings to avoid None in templates
+    if 'start_period' not in resource_dict:
+        resource_dict['start_period'] = ''
+    if 'end_period' not in resource_dict:
+        resource_dict['end_period'] = ''
+    if 'time_period_composite' not in resource_dict:
+        resource_dict['time_period_composite'] = ''
+    
     time_period = re.findall("[0-9]{4}[^\/]+[0-9]{4}", resource_dict['cache_url'])
     results = ['', '']
     only_one_year = None
@@ -107,11 +117,15 @@ def update_start_end_period_param(resource_dict):
         if only_one_year:
             resource_dict['time_period_composite'] = re.findall("[0-9]{4}" , only_one_year[0])[0]
         else: 
-            resource_dict['time_period_composite'] = results[0]
+            resource_dict['time_period_composite'] = results[0] if results[0] else ''
 
 
 
 def update_theme_param(resource_dict):
+    # Initialize theme to None to avoid undefined field errors
+    if 'theme' not in resource_dict:
+        resource_dict['theme'] = None
+    
     for key in names_yml['themes']:
         # if matching state
         if re.search(key, resource_dict['cache_url']):
@@ -119,23 +133,36 @@ def update_theme_param(resource_dict):
                 # if matching short name
                 if re.search(theme.lower(), resource_dict['cache_url'].lower()[5:]):
                     if resource_dict['season']:
+                        # term = u"{0} - {1}".format(resource_dict['season']['name'],
+                        #                           names_yml['themes'][key][theme].decode('iso-8859-15'))
                         term = u"{0} - {1}".format(resource_dict['season']['name'],
-                                                  names_yml['themes'][key][theme].decode('iso-8859-15'))
+                                                  names_yml['themes'][key][theme])
                         resource_dict['theme'] = {
                             'name': term,
                             'order': resource_dict['season']['order']
                         }
                             
                     else:
-                        term = names_yml['themes'][key][theme].decode('iso-8859-15')
+                        # term = names_yml['themes'][key][theme].decode('iso-8859-15')
+                        term = names_yml['themes'][key][theme]
                         resource_dict['theme'] = {
                             'name': term,
                             'order': None
                         }
+                    # Break out of loops once theme is set
+                    return
                         
 
-            if 'theme' not in resource_dict:
-                resource_dict['theme'] = resource_dict['season']
+            # if 'theme' not in resource_dict:
+            #     resource_dict['theme'] = resource_dict['season']
+                
+            if resource_dict['theme'] is None:
+                if resource_dict.get('season'):
+                    # season exists → use as theme
+                    resource_dict['theme'] = str(resource_dict['season'])
+                else:
+                    # season missing → set to empty string to avoid None in templates
+                    resource_dict['theme'] = ''
 
 def update_resources(resource_dict):
     for resource in resource_dict:

@@ -6,9 +6,11 @@ from re import search
 import ckan.plugins as plugins
 import ckantoolkit as tk
 from ckan import model
-from ckanext.spatial.plugin.__init__ import SpatialQuery
+# from ckanext.spatial.plugin.__init__ import SpatialQuery
+from ckanext.spatial.plugin import SpatialQuery
+
 import ckan.plugins.toolkit as toolkit
-from helpers import update_resources, set_of_time_periods, set_of_seasons, \
+from .helpers import update_resources, set_of_time_periods, set_of_seasons, \
         set_of_themes, add_gemet_filter, get_gemet_concept_from_keyword, get_concept_relatives, \
         get_related_concepts_for_keyword
 import yaml
@@ -16,7 +18,8 @@ from geopy.geocoders import Nominatim
 from .database_model import SearchQuery
 import logging
 import rdflib
-
+import datetime
+import shapely
 
 from ckanext.discovery.plugins.search_suggestions.interfaces import \
     ISearchTermPreprocessor
@@ -33,7 +36,7 @@ geolocator = Nominatim(user_agent="http")
 
 def load_rekis_file_yaml_to_dict():
     # TODO: change to relative path
-    path = '/usr/lib/ckan/test_env/src/ckanext-klimakonform/ckanext/klimakonform/public/rekis_ascii_file_naming.yml' 
+    path = '/usr/lib/ckan/default/src/ckanext-klimakonform/ckanext/klimakonform/public/rekis_ascii_file_naming.yml' 
     file_dict = yaml.safe_load(open(path))
     return file_dict
 
@@ -120,15 +123,15 @@ def get_related_keywords(list_of_tags):
                 u'name': k } # u'Bodentrockenheit'
         list_of_tag_dicts.append(tag_dict)
 
-
     return [list_of_tag_dicts, top_five_results]
 
 
 class KlimakonformPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IConfigurable)
-    plugins.implements(plugins.IRoutes)
+    # plugins.implements(plugins.IRoutes)
     plugins.implements(plugins.ITemplateHelpers)
+    # plugins.implements(plugins.IFacets)
     plugins.implements(ISearchTermPreprocessor)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(SpatialQuery)
@@ -136,7 +139,7 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
     # IConfigurable
     def configure(self, config):
         log.debug("Initializing RDF-schema of GEMET vocab")
-        rdf_file = '/usr/lib/ckan/test_env/src/ckanext-klimakonform/ckanext/klimakonform/public/gemet_mod.rdf'
+        rdf_file = '/usr/lib/ckan/default/src/ckanext-klimakonform/ckanext/klimakonform/public/gemet_mod.rdf'
         g = rdflib.Graph()
         skos = rdflib.Namespace('http://www.w3.org/2004/02/skos/core#')
         global rdf
@@ -163,7 +166,110 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
                 'get_unique_set_of_seasons': get_unique_set_of_seasons,
                 'get_unique_set_of_themes': get_unique_set_of_themes,
                 'get_related_keywords': get_related_keywords}
-    
+
+    # IFacets
+    """
+    def dataset_facets(self, facets_dict, package_type):
+        facets_dict['dataset_type'] = toolkit._('Datensatztyp') 
+        log.debug("dataset facets: {}".format(facets_dict.keys()))
+        return facets_dict
+    """
+
+    # IPackageController
+    def before_dataset_view(self, pkg_dict):
+        """
+        Ensure no field values are None to prevent template rendering errors.
+        Replace None values with empty strings.
+        """
+        for key, value in list(pkg_dict.items()):
+            if value is None:
+                pkg_dict[key] = ''
+        return pkg_dict
+
+    def before_dataset_index(self, pkg_dict):
+        log.debug("UPDATING INDEX FOR PACKAGE ID: {}".format(pkg_dict['id']))
+        if {"temporal_start", "temporal_end"} <= set(pkg_dict.keys()) and (pkg_dict.get('temporal_start') and pkg_dict.get('temporal_end')):
+            year_start = datetime.datetime.strptime(pkg_dict['temporal_start'], '%Y-%m-%d').year
+            year_end = datetime.datetime.strptime(pkg_dict['temporal_end'], '%Y-%m-%d').year
+            current_year = datetime.datetime.now().year
+            log.debug(f"Found temporal info for package {pkg_dict['id']}:\n adding temporal_coverage field to index: start {year_start}, end {year_end}, current {current_year}")
+            if year_end > current_year:
+                temporal_coverage = "Zukunft"
+            elif year_start == current_year and year_end == current_year:
+                temporal_coverage = "Gegenwart"
+            else:
+                temporal_coverage = "Vergangenheit"
+            
+            pkg_dict['temporal_coverage'] = temporal_coverage
+            
+        if pkg_dict.get('spatial'):
+            try:
+                spatial_val = pkg_dict.get('spatial')
+                # scheming may store spatial as a JSON string; accept both
+                if isinstance(spatial_val, str):
+                    try:
+                        import json as _json
+                        parsed = _json.loads(spatial_val)
+                    except Exception:
+                        parsed = spatial_val
+                    spatial_val = parsed
+                # Helper to wrap longitude into [-180, 180]
+                def _wrap_lon(x):
+                    try:
+                        return ((float(x) + 180.0) % 360.0) - 180.0
+                    except Exception:
+                        return x
+
+                # Normalize GeoJSON coordinate arrays recursively
+                def _normalize_coords(obj):
+                    if isinstance(obj, (list, tuple)):
+                        # coordinate pair
+                        if len(obj) >= 2 and all(isinstance(n, (int, float)) for n in obj[:2]):
+                            # wrap longitude (first element)
+                            lon = _wrap_lon(obj[0])
+                            lat = obj[1]
+                            return [lon, lat] + [ _normalize_coords(x) for x in obj[2:]] if len(obj) > 2 else [lon, lat]
+                        else:
+                            return [_normalize_coords(x) for x in obj]
+                    elif isinstance(obj, dict):
+                        new = dict(obj)
+                        if 'coordinates' in new:
+                            new['coordinates'] = _normalize_coords(new['coordinates'])
+                        return new
+                    else:
+                        return obj
+
+                # If we now have a mapping/list treat as GeoJSON-like
+                if isinstance(spatial_val, (dict, list)):
+                    try:
+                        spatial_val = _normalize_coords(spatial_val)
+                        shape = shapely.geometry.shape(spatial_val)
+                    except Exception as e:
+                        raise
+                elif isinstance(spatial_val, str):
+                    # try WKT and normalize geometry by transforming longitudes
+                    try:
+                        from shapely import wkt as _wkt
+                        from shapely import ops as _ops
+
+                        shape = _wkt.loads(spatial_val)
+
+                        def _transform_lon(x, y, z=None):
+                            return (_wrap_lon(x), y)
+
+                        shape = _ops.transform(_transform_lon, shape)
+                    except Exception:
+                        raise ValueError('Unsupported spatial format')
+                else:
+                    raise ValueError('Unsupported spatial type: {}'.format(type(spatial_val)))
+
+                wkt = shape.wkt
+                pkg_dict['spatial_geom'] = wkt
+            except Exception as e:
+                log.error("Error processing spatial geometry: {}".format(e))
+        
+        return pkg_dict
+
     # IRoutes
     
     def before_map(self, map):
@@ -190,86 +296,96 @@ class KlimakonformPlugin(plugins.SingletonPlugin):
         # bbox = min Longitude , min Latitude , max Longitude , max Latitude 
         #bbox for germany: 5.564941, 47.141223, 15.571542, 55.059744
         bbox_filter = [5.564941, 47.141223, 15.571542, 55.059744]   
-        
-        # if not 'fq' in search_params:
-        #     """API search - do not enable spatial search to keep control"""
-        #     log.debug("No user search - disabling spatial search filter")
-        #     return search_params
-        # else:
-        
-        log.debug("User search - enabling spatial search filter")
+         
         if 'q' in search_params:
-            terms = search_params['q'].split(' ')
-
-            # Looping through query terms and if first match with base return stored coord values
-            db_query_results = SearchQuery(search_params).get_results_if_exists()
-
-            if db_query_results is not None:
-                db_coords = db_query_results.split(',')
-                db_coords_float = [float(item)for item in db_coords]
-
-                if  db_coords_float[0] >= bbox_filter[0] and \
-                    db_coords_float[1] >= bbox_filter[1] and \
-                    db_coords_float[2] <= bbox_filter[2] and \
-                    db_coords_float[3] <= bbox_filter[3]:
-                    coords_in_filter_bbox = True                    
-                
-                if coords_in_filter_bbox:
-                    '''Entry found in database'''
-                    search_params['extras']['ext_bbox'] = db_query_results
-                    search_params['extras']['ext_prev_extent'] = db_query_results
-                    search_params['q'] = u''
-                    search_params_filtered = SpatialQuery.before_search(context, search_params)
-                    
-                    log.debug('Search_params_filtered_with_bbox : {}'.format(search_params))
-                    return search_params_filtered
-                else:
-                    log.debug('Found coordinates in Database. Location is not in filter bbox. \
-                            Turning off the spatial search')
-                    return search_params
+            if not _is_user_text_search(toolkit.c, search_params['q']):
+                """API search - do not enable spatial search to keep control"""
+                log.debug("No user search - disabling spatial search filter")
+                return search_params
             else:
-                for term in terms:
-                    '''No entry found in DB, try geocoding search-query...'''
-                    log.debug('Calling Nominatim API for search query')
-                    try:
-                        query_geocoded = geolocator.geocode(term)
+                log.debug("User search - enabling spatial search filter")
+                if 'q' in search_params:
+                    terms = search_params['q'].split(' ')
 
-                        if query_geocoded is not None:
-                            if  query_geocoded.longitude >= bbox_filter[0] and \
-                                query_geocoded.latitude >= bbox_filter[1] and \
-                                query_geocoded.longitude <= bbox_filter[2] and \
-                                query_geocoded.latitude <= bbox_filter[3]:
-                                coords_in_filter_bbox = True
+                    # Looping through query terms and if first match with base return stored coord values
+                    db_query_results = SearchQuery(search_params).get_results_if_exists()
 
-                            if coords_in_filter_bbox:
-                                bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
-                                log.debug('Found following coordinates and appended it to query: {}'.format(bbox))
+                    if db_query_results is not None:
+                        db_coords = db_query_results.split(',')
+                        db_coords_float = [float(item)for item in db_coords]
 
-                                search_params['extras']['ext_bbox'] = bbox
-                                search_params['extras']['ext_prev_extent'] = bbox
-                                search_params['q'] = term
-
-                                #Store result into db
-                                SearchQuery(search_params).store()
-
-                                search_params['q'] = u''
-                                search_params_filtered = SpatialQuery.before_search(context, search_params)
-                                
-                                return search_params_filtered
-                            else: 
-                                log.debug('Found coordinates by calling Nomiatim API. Location is not in filter bbox. \
-                                            Turning off the spatial search')
-                                pass
+                        if  db_coords_float[0] >= bbox_filter[0] and \
+                            db_coords_float[1] >= bbox_filter[1] and \
+                            db_coords_float[2] <= bbox_filter[2] and \
+                            db_coords_float[3] <= bbox_filter[3]:
+                            coords_in_filter_bbox = True                    
+                        
+                        if coords_in_filter_bbox:
+                            '''Entry found in database'''
+                            search_params['extras']['ext_bbox'] = db_query_results
+                            search_params['extras']['ext_prev_extent'] = db_query_results
+                            search_params['q'] = u''
+                            search_params_filtered = SpatialQuery.before_search(context, search_params)
+                            #return search_params_filtered
+                            search_params_with_gemet = gemet_filter(search_params_filtered)
+                            # log.debug('Search_params_filtered_with_bbox : {}'.format(search_params_with_gemet))
+                            return search_params_with_gemet
                         else:
-                            pass
-                    except Exception as e: 
-                        log.debug('Failed to find geolocation because {}'.format(e))           
+                            log.debug('Found coordinates in Database. Location is not in filter bbox. \
+                                    Turning off the spatial search')
+                            #search_params_with_gemet = gemet_filter(search_params)
+                            #return search_params_with_gemet
+                            return search_params
+                    else:
+                        for term in terms:
+                            '''No entry found in DB, try geocoding search-query...'''
+                            log.debug('Calling Nominatim API for search query')
+                            try:
+                                query_geocoded = geolocator.geocode(term)
+
+                                if query_geocoded is not None:
+                                    if  query_geocoded.longitude >= bbox_filter[0] and \
+                                        query_geocoded.latitude >= bbox_filter[1] and \
+                                        query_geocoded.longitude <= bbox_filter[2] and \
+                                        query_geocoded.latitude <= bbox_filter[3]:
+                                        coords_in_filter_bbox = True
+
+                                    if coords_in_filter_bbox:
+                                        bbox = '{0},{1},{0},{1}'.format(query_geocoded.longitude, query_geocoded.latitude)
+                                        log.debug('Found following coordinates and appended it to query: {}'.format(bbox))
+
+                                        search_params['extras']['ext_bbox'] = bbox
+                                        search_params['extras']['ext_prev_extent'] = bbox
+                                        search_params['q'] = term
+
+                                        #Store result into db
+                                        SearchQuery(search_params).store()
+
+                                        search_params['q'] = u''
+                                        search_params_filtered = SpatialQuery.before_search(context, search_params)
+                                        search_params_with_gemet = gemet_filter(search_params_filtered)
+
+                                        log.debug('Search_params_filtered_with_bbox : {}'.format(search_params_with_gemet))         
+                                        #return search_params_filtered
+                                        return search_params_with_gemet
+                                    else: 
+                                        log.debug('Found coordinates by calling Nomiatim API. Location is not in filter bbox. \
+                                                    Turning off the spatial search')
+                                        pass
+                                else:
+                                    """ Turn on gemet filter, if no spatial filter is used"""
+                                    #log.debug("Turning on gemet query enrichment")
+                                    return gemet_filter(search_params)
+                                    #return search_params
+                            except Exception as e: 
+                                log.debug('Failed to find geolocation because {}'.format(e))
+            
 
             if  _is_user_text_search(toolkit.c, search_params['q']):
-                #search_params_with_gemet = gemet_filter(search_params)
+                search_params_with_gemet = gemet_filter(search_params)
                 #log.debug('User search final')
-                #return search_params_with_gemet
-                return search_params
+                return search_params_with_gemet
+                #return search_params
         else:
             log.debug('No User search final')
             return search_params

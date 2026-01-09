@@ -1,0 +1,91 @@
+seasons:
+  jahr:
+    name: Jahr 
+    order: 1
+  jw:
+    name: Jahr
+    order: 1
+  fru:
+    name: Fruehling 
+    order: 4
+  frü:
+    name: Fruehling 
+    order: 4
+  som:
+    name: Sommer
+    order: 5
+  her:
+    name: Herbst
+    order: 6
+  win:
+    name: Winter
+    order: 7
+  sohj:
+    name: Sommerhalbjahr
+    order: 2
+  wihj:
+    name: Winterhalbjahr
+    order: 3
+  vep1:
+    name: Vegetationsperiode I
+    order: 8
+  vep2:
+    name: Vegetationsperiode II
+    order: 9
+  vpi_:
+    name: Vegetationsperiode I
+    order: 8
+  _vpi.asc:
+    name: Vegetationsperiode I
+    order: 8
+  vpii:
+    name: Vegetationsperiode II
+    order: 9
+  _hyso: 
+    name: Hydrolgischer Sommer
+    order: 10
+  _hywi: 
+    name: Hydrologischer Winter
+    order: 11
+
+themes:
+  viewer/SN/:
+    TM: Mittlere Temperatur
+    TN: Temperatur Minimum
+    TX: Temperatur Maximum
+    RH_Perz90: Regenhoehen 90 Perzentil (R90p)
+    RH_Perz95: Regenhoehen 95 Perzentil (R95p)
+    INT90: Starkregen R90p-mittlere Intensitaet pro Ereignistage
+    INT95: Starkregen R95p-mittlere Intensitaet pro Ereignistage
+    UET90: Starkregen R90p- Aenderungen der Ueberschreitungstage
+    UET95: Starkregen R95p- Aenderungen der Ueberschreitungstage 
+    KORE90: Starkregen R90p- Aenderungen der Auftrittshaeufigkeit 
+    KORE95: Starkregen R95p- Aenderungen der Auftrittshaeufigkeit 
+    KA_INT: Kerngebiete der Aenderungen der Intensitaet (R90p und R95p)
+    KA_Ueb: Kerngebiete der Aenderungen der Ueberschreitungstage (R90p und R95p)
+    KA_Auftritt: Kerngebiete der Aenderungen des Auftretens (R90p und R95p)
+    HD_: Heisse Tage
+    FD_: Frosttage
+    ID_: Eistage
+    SU_: Tage
+
+  viewer/ST/:
+    TM: Mittlere Temperatur
+    TN: Temperatur Minimum
+    TX: Temperatur Maximum
+    RRK: Korrigierter Niederschlag
+    RRU: Unkorrigierter Niederschlag
+    KWK: Korrigierte KWB
+    KWU: Unkorrigierte KWB
+
+  viewer/TN/:
+    rrk: Niederschlag
+    tm0: Temperatur
+    ht: Heisse Tage
+    oft: Oberflaechentemperatur
+    sd0: Sonnenscheindauer
+    rgk: Globalstrahlung
+    kwk: Klimatische Wasserbilanz
+    hit: Hitzebelastung
+    kbk: Klimabewertungskarte
+    pegel: Pegel Q-Tagesmittel

@@ -1,0 +1,7 @@
+klimakonform_css:
+  output: ckanext-klimakonform/%(version)s_klimakonform.css
+  extra:
+    preload:
+      - base/main
+  contents:
+    - klimakonform.css

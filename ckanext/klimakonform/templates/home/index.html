@@ -1,0 +1,85 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _("Welcome") }}{% endblock %}
+
+{% block maintag %}{% endblock %}
+{% block toolbar %}{% endblock %}
+
+{% block content %}
+<div class="homepage">
+  <div id="content" class="container">
+    {{ self.flash() }}
+  </div>
+  
+  {% block primary_content %}
+  <div role="main">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Open Data Katalog für KlimaKonform und ReKIS</h1>
+          <p class="hero-subtitle">Entdecken Sie Klimadaten und Forschungsergebnisse aus der Region</p>
+          {% block search %}
+          <div class="search-wrapper">
+            {% snippet 'home/snippets/search.html'%}
+          </div>
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action Section 
+    <div class="featured-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2 class="cta-title">Start Exploring Our Data</h2>
+          <p class="cta-description">Browse through our comprehensive collection of datasets and find the information you need</p>
+          <div class="text-center" style="margin-top: 30px;">
+            <a href="{{ h.url_for('dataset.search') }}" class="btn btn-primary btn-large">
+              Browse All Datasets
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Boxes Section 
+    <div class="info-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="info-box">
+              <div class="info-icon">
+                <i class="fa fa-search"></i>
+              </div>
+              <h3>Explore Data</h3>
+              <p>Search and discover datasets from various domains and organizations.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info-box">
+              <div class="info-icon">
+                <i class="fa fa-download"></i>
+              </div>
+              <h3>Download & Use</h3>
+              <p>Access open data in various formats for your projects and applications.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info-box">
+              <div class="info-icon">
+                <i class="fa fa-share-alt"></i>
+              </div>
+              <h3>Share & Collaborate</h3>
+              <p>Contribute datasets and collaborate with the data community.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+  
+  {% endblock %}
+</div>
+{% endblock %}
